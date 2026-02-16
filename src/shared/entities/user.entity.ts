@@ -9,8 +9,8 @@ export class User {
     @Property()
     name!: string;
 
-    @Property()
-    surname!: string;
+    @Property({ nullable: true })
+    surname?: string;
 
     @Property({ unique: true })
     email!: string;
@@ -24,15 +24,16 @@ export class User {
     @Property({ nullable: true })
     avatarUrl?: string;
 
+    @Property({ nullable: false })
     @Enum(() => EUserRole)
     role!: EUserRole;
 
-    @Property({ nullable: true })
-    dtLastLogin?: Date;
+    @Property({ nullable: true, type: 'timestamp with time zone' })
+    dtLastLoginAt?: Date;
 
-    @Property({ onCreate: () => new Date() })
-    dtCreated!: Date;
+    @Property({ onCreate: () => new Date().toISOString(), type: 'timestamp with time zone' })
+    dtCreatedAt?: Date;
 
-    @Property({ onCreate: () => new Date(), onUpdate: () => new Date() })
-    dtUpdated!: Date;
+    @Property({ onCreate: () => new Date().toISOString(), onUpdate: () => new Date().toISOString(), type: 'timestamp with time zone' })
+    dtUpdatedAt?: Date;
 }

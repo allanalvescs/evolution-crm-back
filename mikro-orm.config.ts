@@ -1,13 +1,14 @@
 import { Options } from "@mikro-orm/core";
 import { PostgreSqlDriver } from "@mikro-orm/postgresql";
 import path from "path";
+import { env } from "src/config/env";
 
 const config: Options<PostgreSqlDriver> = {
-    host: 'localhost',
-    port: 5432,
-    user: "admin",
-    password: "postgres",
-    dbName: 'evolution-crm',
+    host: env.dbHost,
+    port: env.dbPort,
+    user: env.dbUser,
+    password: env.dbPassword,
+    dbName: env.dbName,
     entities: ['./dist/**/*.entity.js'],
     entitiesTs: ['./src/**/*.entity.ts'],
     migrations: {
