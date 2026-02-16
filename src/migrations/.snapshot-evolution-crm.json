@@ -31,7 +31,7 @@
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "length": 255,
           "mappedType": "string"
         },
@@ -77,21 +77,17 @@
         },
         "role": {
           "name": "role",
-          "type": "text",
+          "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "enumItems": [
-            "ADMIN",
-            "SUPERVISOR",
-            "OPERATOR"
-          ],
-          "mappedType": "enum"
+          "length": 255,
+          "mappedType": "string"
         },
-        "dt_last_login": {
-          "name": "dt_last_login",
-          "type": "timestamptz",
+        "dt_last_login_at": {
+          "name": "dt_last_login_at",
+          "type": "timestamp",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
@@ -99,9 +95,9 @@
           "length": 6,
           "mappedType": "datetime"
         },
-        "dt_created": {
-          "name": "dt_created",
-          "type": "timestamptz",
+        "dt_created_at": {
+          "name": "dt_created_at",
+          "type": "timestamp",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
@@ -109,9 +105,9 @@
           "length": 6,
           "mappedType": "datetime"
         },
-        "dt_updated": {
-          "name": "dt_updated",
-          "type": "timestamptz",
+        "dt_updated_at": {
+          "name": "dt_updated_at",
+          "type": "timestamp",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
