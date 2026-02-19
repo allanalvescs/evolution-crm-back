@@ -1,10 +1,9 @@
-import { UserRepository } from "src/shared/database/repositories/users.repository";
 import { AuthValidator } from "./auth.validator";
 import { Test } from "@nestjs/testing";
 
 import * as bcrypt from "bcryptjs";
-import { User } from "src/shared/entities/user.entity";
-
+import { UserRepository } from "src/domain/repositories/user.repository";
+import { User } from "src/domain/entities/user";
 
 jest.mock("bcryptjs");
 

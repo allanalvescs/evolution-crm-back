@@ -3,7 +3,7 @@ import { AuthService } from "./auth.service";
 import { JwtService } from "@nestjs/jwt";
 import { SignupCsDto } from "../dtos/signup-cs.dto";
 import * as bcrypt from "bcryptjs";
-import { UserRepository } from "src/shared/database/repositories/users.repository";
+import { UserRepository } from "src/domain/repositories/user.repository";
 import { UserValidator } from "src/shared/validator/user/user.validator";
 import { AuthValidator } from "src/shared/validator/auth/auth.validator";
 import { EUserRole } from "src/utils/enum/user-role.enum";
@@ -19,7 +19,7 @@ describe("Suite Test AuthService", () => {
       authValidator: AuthValidator,
       jwtService: JwtService;
 
-  const mockUserRepo = { save: jest.fn() };
+  const mockUserRepo = { create: jest.fn() };
   const mockUserValidator = { existByEmail: jest.fn() };
   const mockAuthValidator = { validate: jest.fn() };
   const mockJwtService = { signAsync: jest.fn() };
@@ -68,14 +68,14 @@ describe("Suite Test AuthService", () => {
         };
 
         mockUserValidator.existByEmail.mockResolvedValue(true);
-        mockUserRepo.save.mockResolvedValue(savedUser);
+        mockUserRepo.create.mockResolvedValue(savedUser);
         (bcrypt.hash as jest.Mock).mockResolvedValue("hashedPassword");
       
         const result = await service.signup(body);
 
         expect(userValidator.existByEmail).toHaveBeenCalledWith(body.email);
         expect(bcrypt.hash).toHaveBeenCalledWith(body.password, 12);
-        expect(userRepo.save).toHaveBeenCalledWith({
+        expect(userRepo.create).toHaveBeenCalledWith({
           name: body.name,
           email: body.email,
           password: "hashedPassword",
@@ -91,7 +91,7 @@ describe("Suite Test AuthService", () => {
         await expect(service.signup(body)).rejects.toThrow();
         expect(userValidator.existByEmail).toHaveBeenCalledWith(body.email);
         expect(bcrypt.hash).not.toHaveBeenCalled();
-        expect(userRepo.save).not.toHaveBeenCalled();
+        expect(userRepo.create).not.toHaveBeenCalled();
       });
   });
   

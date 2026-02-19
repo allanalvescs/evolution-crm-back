@@ -1,7 +1,7 @@
 import { Test } from "@nestjs/testing";
 import { UserValidator } from "./user.validator";
-import { UserRepository } from "src/shared/database/repositories/users.repository";
-import { User } from "src/shared/entities/user.entity";
+import { UserRepository } from "src/domain/repositories/user.repository";
+import { User } from "src/domain/entities/user";
 
 describe("Suite Test UserValidator", () => {
   let validator: UserValidator;
