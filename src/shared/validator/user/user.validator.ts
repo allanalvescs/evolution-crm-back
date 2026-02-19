@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { UserRepository } from "src/shared/database/repositories/users.repository";
+import { UserRepository } from "src/domain/repositories/user.repository";
 
 @Injectable()
 export class UserValidator {

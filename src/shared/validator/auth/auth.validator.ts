@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { compare } from "bcryptjs";
-import { UserRepository } from "src/shared/database/repositories/users.repository";
+import { UserRepository } from "src/domain/repositories/user.repository";
 
 @Injectable()
 export class AuthValidator {

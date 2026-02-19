@@ -1,11 +1,10 @@
-import { Entity, PrimaryKey, Property, Enum } from "@mikro-orm/core";
-import { EUserRole } from "../enum/user-role.enum";
-
-@Entity({ tableName: 'users' })
-export class User {
-    @PrimaryKey({ autoincrement: true })
-    id!: number;
-
+import { Entity, Property, Enum } from "@mikro-orm/core";
+import { EUserRole } from "../../utils/enum/user-role.enum";
+import { BaseEntity } from "./base-entity";
+@Entity({ 
+    tableName: 'users'
+})
+export class User extends BaseEntity {
     @Property()
     name!: string;
 
@@ -31,9 +30,4 @@ export class User {
     @Property({ nullable: true, type: 'timestamp with time zone' })
     dtLastLoginAt?: Date;
 
-    @Property({ onCreate: () => new Date().toISOString(), type: 'timestamp with time zone' })
-    dtCreatedAt?: Date;
-
-    @Property({ onCreate: () => new Date().toISOString(), onUpdate: () => new Date().toISOString(), type: 'timestamp with time zone' })
-    dtUpdatedAt?: Date;
 }

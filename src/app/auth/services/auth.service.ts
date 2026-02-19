@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { SignupCsDto } from "../dtos/signup-cs.dto";
-import { UserRepository } from "src/shared/database/repositories/users.repository";
 import { hash } from "bcryptjs";
-import { EUserRole } from "src/shared/enum/user-role.enum";
+import { EUserRole } from "src/utils/enum/user-role.enum";
 import { UserValidator } from "src/shared/validator/user/user.validator";
 import { SigninCsDto } from "../dtos/signin-cs.dto";
 import { JwtService } from "@nestjs/jwt";
-import { User } from "src/shared/entities/user.entity";
+import { User } from "src/domain/entities/user";
 import { AuthValidator } from "src/shared/validator/auth/auth.validator";
+import { UserRepository } from "src/domain/repositories/user.repository";
 
 @Injectable()
 export class AuthService {
@@ -36,13 +36,15 @@ export class AuthService {
 
     const passwordHash = await hash(password, 12);
 
-    const newUser = await this.userRepository.save({
+    const user = new User();
+    user.assign({
       name,
       email,
       password: passwordHash,
       role: EUserRole.ADMIN
-    } as any);
+    });
 
+    const newUser = await this.userRepository.create(user);
 
     return newUser;
   }

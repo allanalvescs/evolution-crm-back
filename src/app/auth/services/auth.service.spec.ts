@@ -6,7 +6,7 @@ import * as bcrypt from "bcryptjs";
 import { UserRepository } from "src/shared/database/repositories/users.repository";
 import { UserValidator } from "src/shared/validator/user/user.validator";
 import { AuthValidator } from "src/shared/validator/auth/auth.validator";
-import { EUserRole } from "src/shared/enum/user-role.enum";
+import { EUserRole } from "src/utils/enum/user-role.enum";
 import { HttpException, HttpStatus, UnauthorizedException } from "@nestjs/common";
 
 jest.mock("bcryptjs");
