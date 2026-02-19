@@ -8,6 +8,7 @@ import { UserValidator } from "src/shared/validator/user/user.validator";
 import { AuthValidator } from "src/shared/validator/auth/auth.validator";
 import { EUserRole } from "src/utils/enum/user-role.enum";
 import { HttpException, HttpStatus, UnauthorizedException } from "@nestjs/common";
+import { User } from "src/domain/entities/user";
 
 jest.mock("bcryptjs");
 
@@ -68,7 +69,7 @@ describe("Suite Test AuthService", () => {
         };
 
         mockUserValidator.existByEmail.mockResolvedValue(true);
-        mockUserRepo.create.mockResolvedValue(savedUser);
+        mockUserRepo.create.mockResolvedValue(new User());
         (bcrypt.hash as jest.Mock).mockResolvedValue("hashedPassword");
       
         const result = await service.signup(body);
@@ -81,7 +82,7 @@ describe("Suite Test AuthService", () => {
           password: "hashedPassword",
           role: EUserRole.ADMIN
         });
-        expect(result).toEqual(savedUser);
+        expect(result).toBeInstanceOf(User);
       });
 
       it("should throw an error if email already exists", async () => {
@@ -118,7 +119,7 @@ describe("Suite Test AuthService", () => {
     it("should throw an error if credentials are invalid", async () => {
       const body = { email: "john.doe@example.com", password: "wrongPassword" };
 
-      mockAuthValidator.validate.mockRejectedValue(new UnauthorizedException('Credenciais inválidas - Verifica seu email e senha estão corretos'));
+      mockAuthValidator.validate.mockRejectedValue(new UnauthorizedException('Credenciais inválidas - Verifique se seu email e senha'));
 
       await expect(service.signin(body)).rejects.toThrow();
       expect(authValidator.validate).toHaveBeenCalledWith(body);

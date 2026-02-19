@@ -5,8 +5,6 @@ export const ExtractPayload = createParamDecorator<undefined>(
     const request = ctx.switchToHttp().getRequest();
     const user = request.user;
 
-    console.log({ user });
-
     if (!user) {
       throw new UnauthorizedException('Usuário não autenticado');
     }

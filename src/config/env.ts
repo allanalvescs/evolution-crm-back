@@ -1,5 +1,5 @@
 import { plainToInstance, Transform } from "class-transformer";
-import { IsNotEmpty, IsString, validateSync } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString, validateSync } from "class-validator";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -26,7 +26,7 @@ class Env {
     dbName: string;
 
     @Transform(({ value }) => parseInt(value))
-    @IsNotEmpty()
+    @IsNumber()
     dbPort: number;
 }
 

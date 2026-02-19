@@ -1,10 +1,9 @@
-import { Body, Controller, Injectable, Post } from "@nestjs/common";
+import { Body, Controller, Post } from "@nestjs/common";
 import { SignupCsDto } from "./dtos/signup-cs.dto";
 import { AuthService } from "./services/auth.service";
 import { SigninCsDto } from "./dtos/signin-cs.dto";
 import { IsPublic } from "src/shared/decorators/isPublic";
 
-@Injectable()
 @Controller('auth')
 export class AuthController {
   constructor(

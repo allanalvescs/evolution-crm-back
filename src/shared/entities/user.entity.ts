@@ -23,7 +23,7 @@ export class User extends BaseEntity {
     @Property({ nullable: true })
     avatarUrl?: string;
 
-    @Property({ nullable: false })
+    @Property()
     @Enum(() => EUserRole)
     role!: EUserRole;
 

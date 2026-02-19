@@ -13,7 +13,7 @@ export class AuthValidator {
 
     if (!user || !isValidPassword) {
       throw new UnauthorizedException(
-        'Credenciais inválidas - Verifica seu email e senha estão corretos',
+        'Credenciais inválidas - Verifique se seu email e senha',
       );
     }
     
