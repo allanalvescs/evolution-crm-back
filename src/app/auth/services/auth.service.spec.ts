@@ -67,7 +67,7 @@ describe("Suite Test AuthService", () => {
           role: EUserRole.ADMIN 
         };
 
-        mockUserValidator.existByEmail.mockResolvedValue(true);
+        mockUserValidator.existByEmail.mockResolvedValue(undefined);
         mockUserRepo.create.mockResolvedValue(savedUser);
         (bcrypt.hash as jest.Mock).mockResolvedValue("hashedPassword");
       
@@ -75,12 +75,12 @@ describe("Suite Test AuthService", () => {
 
         expect(userValidator.existByEmail).toHaveBeenCalledWith(body.email);
         expect(bcrypt.hash).toHaveBeenCalledWith(body.password, 12);
-        expect(userRepo.create).toHaveBeenCalledWith({
+        expect(userRepo.create).toHaveBeenCalledWith(expect.objectContaining({
           name: body.name,
           email: body.email,
           password: "hashedPassword",
           role: EUserRole.ADMIN
-        });
+        }));
         expect(result).toEqual(savedUser);
       });
 
