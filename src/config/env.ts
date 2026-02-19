@@ -1,6 +1,8 @@
-import { plainToInstance } from "class-transformer";
-import { IsNotEmpty, IsString, validateSync } from "class-validator";
-import { DEFAULT_CIPHERS } from "tls";
+import { plainToInstance, Transform } from "class-transformer";
+import { IsNotEmpty, IsNumber, IsString, validateSync } from "class-validator";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 class Env {
     @IsString()
@@ -22,6 +24,10 @@ class Env {
     @IsString()
     @IsNotEmpty()
     dbName: string;
+
+    @Transform(({ value }) => parseInt(value))
+    @IsNumber()
+    dbPort: number;
 }
 
 export const env: Env = plainToInstance(Env, {
@@ -30,6 +36,7 @@ export const env: Env = plainToInstance(Env, {
     dbPassword: process.env.DB_PASSWORD,
     dbHost: process.env.DB_HOST,
     dbName: process.env.DB_NAME,
+    dbPort: process.env.DB_PORT,
 });
 
 const errors = validateSync(env);
