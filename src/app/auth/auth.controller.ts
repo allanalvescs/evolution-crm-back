@@ -2,7 +2,7 @@ import { Body, Controller, Post } from "@nestjs/common";
 import { SignupCsDto } from "./dtos/signup/signup-cs.dto";
 import { AuthService } from "./services/auth.service";
 import { SigninCsDto } from "./dtos/signin/signin-cs.dto";
-import { IsPublic } from "src/shared/decorators/isPublic";
+import { IsPublic } from "src/shared/decorators/is-public.decorator";
 import { ApiCreatedResponse, ApiOperation } from "@nestjs/swagger";
 import { SigninScResponse } from "./dtos/signin/signin-sc.dto";
 import { SignupScResponse } from "./dtos/signup/signup-sc.dto";

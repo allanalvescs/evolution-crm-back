@@ -1,5 +1,5 @@
 import { Controller, Get } from "@nestjs/common";
-import { ExtractPayload } from "src/shared/decorators/extractPayload";
+import { ExtractPayload } from "src/shared/decorators/extract-payload.decorator";
 import { UserService } from "./service/user.service";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
