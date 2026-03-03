@@ -13,12 +13,7 @@ async function bootstrap() {
     .setDescription('API do sistema de CRM Evolution')
     .setVersion('1.0')
     .addTag('evolution-crm')
-    .addBasicAuth({
-      type: 'http',
-      scheme: 'bearer',
-      bearerFormat: 'JWT',
-      description: 'Insira o token JWT no formato: Bearer <token>',
-    }, 'access-token')
+    .addBearerAuth()
     .build();
 
   const documentFactory = SwaggerModule.createDocument(app, config);

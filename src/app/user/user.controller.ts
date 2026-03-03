@@ -8,7 +8,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get("/me")
-  @ApiBearerAuth('access-token')
+  @ApiBearerAuth()
   me(@ExtractPayload() payload) {
     return this.userService.me(payload);
   }
