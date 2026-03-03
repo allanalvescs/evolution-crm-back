@@ -1,8 +1,9 @@
 import { Body, Controller, Post } from "@nestjs/common";
 import { ClientCreateCsDto } from "./dtos/create/client-create-cs.dto";
-import { ApiBearerAuth, ApiOperation } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiCreatedResponse, ApiOperation } from "@nestjs/swagger";
 import { ActiveUserId } from "src/shared/decorators/active-user-id.decorator";
 import { ClientService } from "./service/client.service";
+import { ClientCreateScResponseDto } from "./dtos/create/client-create-sc.dto";
 
 @Controller("clients")
 export class ClientController {
@@ -12,6 +13,9 @@ export class ClientController {
   
   @ApiOperation({
     summary: "Criação de cliente",
+  })
+  @ApiCreatedResponse({
+    type: ClientCreateScResponseDto,
   })
   @Post()
   @ApiBearerAuth()

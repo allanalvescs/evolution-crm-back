@@ -8,6 +8,9 @@ import { JwtService } from "@nestjs/jwt";
 import { User } from "src/domain/entities/user";
 import { AuthValidator } from "src/shared/validator/auth/auth.validator";
 import { UserRepository } from "src/domain/repositories/user.repository";
+import { plainToInstance } from "class-transformer";
+import { SigninScResponseDto } from "../dtos/signin/signin-sc.dto";
+import { SignupScResponseDto } from "../dtos/signup/signup-sc.dto";
 
 @Injectable()
 export class AuthService {
@@ -25,8 +28,9 @@ export class AuthService {
 
       const accessToken = await this.generateToken(user);
 
-      return { accessToken };
+      const result = plainToInstance(SigninScResponseDto, { accessToken }, { excludeExtraneousValues: true });
 
+      return result;
   }
 
   async signup(body: SignupCsDto) {
@@ -46,7 +50,9 @@ export class AuthService {
 
     const newUser = await this.userRepository.create(user);
 
-    return newUser;
+    const result = plainToInstance(SignupScResponseDto, newUser, { excludeExtraneousValues: true });
+
+    return result;
   }
 
   private generateToken(user: User) {
