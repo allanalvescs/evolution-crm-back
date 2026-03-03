@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { SignupCsDto } from "../dtos/signup-cs.dto";
+import { SignupCsDto } from "../dtos/signup/signup-cs.dto";
 import { hash } from "bcryptjs";
 import { EUserRole } from "src/shared/enum/user-role.enum";
 import { UserValidator } from "src/shared/validator/user/user.validator";
-import { SigninCsDto } from "../dtos/signin-cs.dto";
+import { SigninCsDto } from "../dtos/signin/signin-cs.dto";
 import { JwtService } from "@nestjs/jwt";
 import { User } from "src/domain/entities/user";
 import { AuthValidator } from "src/shared/validator/auth/auth.validator";

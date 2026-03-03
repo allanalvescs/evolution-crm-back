@@ -1,7 +1,7 @@
 import { Test } from "@nestjs/testing";
 import { AuthService } from "./auth.service";
 import { JwtService } from "@nestjs/jwt";
-import { SignupCsDto } from "../dtos/signup-cs.dto";
+import { SignupCsDto } from "../dtos/signup/signup-cs.dto";
 import * as bcrypt from "bcryptjs";
 import { UserRepository } from "src/domain/repositories/user.repository";
 import { UserValidator } from "src/shared/validator/user/user.validator";
