@@ -1,8 +1,14 @@
-import { IsString, IsEmail, IsEnum, IsOptional, IsNumberString } from "class-validator";
+import {
+  IsString,
+  IsEmail,
+  IsEnum,
+  IsOptional,
+  IsNumberString,
+} from "class-validator";
 import { Transform } from "class-transformer";
 import { EClientType } from "src/shared/enum/client-type";
-import { EStatus } from "src/shared/enum/generic-status";
 import { ApiProperty } from "@nestjs/swagger";
+import { IsCpfCnpj } from "src/shared/decorators/is-cpf-cnpj.decorator";
 
 export class ClientCreateCsDto {
   @ApiProperty({
@@ -45,6 +51,7 @@ export class ClientCreateCsDto {
   })
   @IsString({ message: "cpfCnpj deve ser uma string" })
   @IsNumberString({}, { message: "cpfCnpj deve conter apenas números" })
+  @IsCpfCnpj()
   @Transform(({ value }) => value?.replace(/\D/g, ""))
   cpfCnpj: string;
 

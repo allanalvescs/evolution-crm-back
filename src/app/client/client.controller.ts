@@ -1,20 +1,25 @@
 import { Body, Controller, Post } from "@nestjs/common";
 import { ClientCreateCsDto } from "./dtos/create/client-create-cs.dto";
-import { ExtractPayload, ExtractPayloadDto } from "src/shared/decorators/extractPayload";
-import { ApiCreatedResponse, ApiOperation } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation } from "@nestjs/swagger";
+import { ActiveUserId } from "src/shared/decorators/activeUserId";
+import { ClientService } from "./service/client.service";
 
 @Controller("clients")
 export class ClientController {
-  constructor() {}
+  constructor(
+    private readonly clientService: ClientService
+  ) {}
   
   @ApiOperation({
-    summary: 'Criação de cliente',
+    summary: "Criação de cliente",
   })
   @Post()
+  @ApiBearerAuth()
   create(
     @Body() body: ClientCreateCsDto,
-    @ExtractPayload() payload: ExtractPayloadDto
+    @ActiveUserId() userId: number
   ) {
-    
+    console.log("INIT controller")
+    return this.clientService.create({ data: body, userId });
   }
 }
