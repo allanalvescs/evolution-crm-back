@@ -6,13 +6,15 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './app/auth/auth.guard';
 import { UserModule } from './app/user/user.module';
 import { DatabaseModule } from './infrastructure/database/database.module';
+import { ClientModule } from './app/client/client.module';
 
 @Module({
   imports: [
     MikroOrmModule.forRoot(config),
     DatabaseModule,
     AuthModule,
-    UserModule
+    UserModule,
+    ClientModule
   ],
   controllers: [],
   providers: [
