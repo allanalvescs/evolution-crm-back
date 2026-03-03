@@ -1,5 +1,5 @@
 import { Entity, Property, Enum } from "@mikro-orm/core";
-import { EUserRole } from "../../utils/enum/user-role.enum";
+import { EUserRole } from "../../shared/enum/user-role.enum";
 import { BaseEntity } from "./base-entity";
 @Entity({ 
     tableName: 'users'

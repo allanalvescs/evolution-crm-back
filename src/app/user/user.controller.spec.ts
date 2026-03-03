@@ -1,7 +1,7 @@
 import { Test } from "@nestjs/testing";
 import { UserService } from "./service/user.service";
 import { UserController } from "./user.controller";
-import { EUserRole } from "src/utils/enum/user-role.enum";
+import { EUserRole } from "src/shared/enum/user-role.enum";
 
 describe("Suite Test UserController", () => {
   let controller: UserController;

@@ -1,7 +1,7 @@
 import { Test } from "@nestjs/testing";
 import { UserRepository } from "src/domain/repositories/user.repository";
 import { UserService } from "./user.service";
-import { EUserRole } from "src/utils/enum/user-role.enum";
+import { EUserRole } from "src/shared/enum/user-role.enum";
 
 describe("Suite Test UserService", () => {
   let service: UserService;
