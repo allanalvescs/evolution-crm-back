@@ -4,11 +4,73 @@ import {
   IsEnum,
   IsOptional,
   IsNumberString,
+  IsInt,
 } from "class-validator";
 import { Transform } from "class-transformer";
 import { EClientType } from "src/shared/enum/client-type";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsCpfCnpj } from "src/shared/decorators/is-cpf-cnpj.decorator";
+
+export class ClientAddressCreateCsDto {
+  @ApiProperty({
+    description: 'Rua do endereço do cliente',
+    example: 'Rua das Flores',
+  })
+  @IsString({ message: "street deve ser uma string" })
+  @Transform(({ value }) => value?.trim())
+  street: string;
+
+  @ApiProperty({
+    description: 'Bairro do endereço do cliente',
+    example: 'Jardim Primavera',
+  })
+  @IsString({ message: "neighborhood deve ser uma string" })
+  @Transform(({ value }) => value?.trim())
+  neighborhood: string;
+
+  @ApiProperty({
+    description: 'Complemento do endereço do cliente',
+    example: 'Casa, apartamento, etc.',
+    required: false,
+  })
+  @IsOptional()
+  @IsString({ message: "complement deve ser uma string" })
+  @Transform(({ value }) => value?.trim())
+  complement?: string;
+
+  @ApiProperty({
+    description: 'Cidade do endereço do cliente',
+    example: 'São Paulo',
+  })
+  @IsString({ message: "city deve ser uma string" })
+  @Transform(({ value }) => value?.trim())
+  city: string;
+
+  @ApiProperty({
+    description: 'Estado do endereço do cliente',
+    example: 'SP',
+  })
+  @IsString({ message: "state deve ser uma string" })
+  @Transform(({ value }) => value?.trim().toUpperCase())
+  state: string;
+
+  @ApiProperty({
+    description: 'Número do endereço do cliente',
+    example: '123',
+  })
+  @IsInt({ message: "number deve ser um número inteiro" })
+  @Transform(({ value }) => parseInt(value, 10))
+  number: number;
+
+  @ApiProperty({
+    description: 'CEP do endereço do cliente - apenas dígitos',
+    example: '12345678',
+  })
+  @IsString({ message: "zipCode deve ser uma string" })
+  @IsNumberString({}, { message: "zipCode deve conter apenas números" })
+  @Transform(({ value }) => value?.replace(/\D/g, ""))
+  zipCode: string;
+}
 
 export class ClientCreateCsDto {
   @ApiProperty({
@@ -64,4 +126,10 @@ export class ClientCreateCsDto {
   @IsString({ message: "phone deve ser uma string" })
   @Transform(({ value }) => value?.replace(/\D/g, ""))
   phone?: string;
+
+  @ApiProperty({
+    description: 'Endereço do cliente',
+    type: ClientAddressCreateCsDto,
+  })
+  address: ClientAddressCreateCsDto;
 }

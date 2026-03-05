@@ -5,6 +5,8 @@ import { MikroOrmUserRepository } from "./repositories/users.repository";
 import { User } from "src/infrastructure/entities/user.entity";
 import { Client } from "../entities/client.entity";
 import { ClientAddress } from "../entities/client-address.entity";
+import { ClientRepository } from "src/domain/repositories/client.repository";
+import { MikroOrmClientRepository } from "./repositories/client.repository";
 
 @Global()
 @Module({
@@ -17,8 +19,12 @@ import { ClientAddress } from "../entities/client-address.entity";
         {
             provide: UserRepository,
             useClass: MikroOrmUserRepository,
+        },
+        {
+            provide: ClientRepository,
+            useClass: MikroOrmClientRepository,
         }
     ],
-    exports: [UserRepository],
+    exports: [UserRepository, ClientRepository],
 })
 export class DatabaseModule {}

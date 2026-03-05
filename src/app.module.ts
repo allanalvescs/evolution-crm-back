@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import config from '../mikro-orm.config';
-import { AuthModule } from './app/auth/auth.module';
+import { AuthModule } from './modules/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from './app/auth/auth.guard';
-import { UserModule } from './app/user/user.module';
+import { AuthGuard } from './modules/auth/auth.guard';
+import { UserModule } from './modules/user/user.module';
 import { DatabaseModule } from './infrastructure/database/database.module';
-import { ClientModule } from './app/client/client.module';
+import { ClientModule } from './modules/client/client.module';
 
 @Module({
   imports: [
@@ -21,7 +21,7 @@ import { ClientModule } from './app/client/client.module';
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
-    }
+    },
   ],
 })
 export class AppModule {}

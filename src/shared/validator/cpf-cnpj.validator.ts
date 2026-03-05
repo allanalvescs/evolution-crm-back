@@ -3,7 +3,7 @@ import {
   ValidatorConstraintInterface,
   ValidationArguments,
 } from 'class-validator';
-import { EClientType } from '../../enum/client-type';
+import { EClientType } from 'src/shared/enum/client-type';
 
 @ValidatorConstraint({ name: 'isCpfCnpj', async: false })
 export class IsCpfCnpjConstraint implements ValidatorConstraintInterface {

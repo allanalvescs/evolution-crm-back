@@ -4,11 +4,13 @@ import { JwtService } from "@nestjs/jwt";
 import { SignupCsDto } from "../dtos/signup/signup-cs.dto";
 import * as bcrypt from "bcryptjs";
 import { UserRepository } from "src/domain/repositories/user.repository";
-import { UserValidator } from "src/shared/validator/user/user.validator";
-import { AuthValidator } from "src/shared/validator/auth/auth.validator";
+
 import { EUserRole } from "src/shared/enum/user-role.enum";
 import { HttpException, HttpStatus, UnauthorizedException } from "@nestjs/common";
 import { User } from "src/domain/entities/user";
+import { AuthValidator } from "src/applications/validator/auth/auth.validator";
+import { UserValidator } from "src/applications/validator/user/user.validator";
+import { SignupScResponseDto } from "../dtos/signup/signup-sc.dto";
 
 jest.mock("bcryptjs");
 
@@ -82,7 +84,7 @@ describe("Suite Test AuthService", () => {
           password: "hashedPassword",
           role: EUserRole.ADMIN
         });
-        expect(result).toBeInstanceOf(User);
+        expect(result).toBeInstanceOf(SignupScResponseDto);
       });
 
       it("should throw an error if email already exists", async () => {

@@ -2,15 +2,15 @@ import { Injectable } from "@nestjs/common";
 import { SignupCsDto } from "../dtos/signup/signup-cs.dto";
 import { hash } from "bcryptjs";
 import { EUserRole } from "src/shared/enum/user-role.enum";
-import { UserValidator } from "src/shared/validator/user/user.validator";
 import { SigninCsDto } from "../dtos/signin/signin-cs.dto";
 import { JwtService } from "@nestjs/jwt";
 import { User } from "src/domain/entities/user";
-import { AuthValidator } from "src/shared/validator/auth/auth.validator";
 import { UserRepository } from "src/domain/repositories/user.repository";
 import { plainToInstance } from "class-transformer";
 import { SigninScResponseDto } from "../dtos/signin/signin-sc.dto";
 import { SignupScResponseDto } from "../dtos/signup/signup-sc.dto";
+import { AuthValidator } from "src/applications/validator/auth/auth.validator";
+import { UserValidator } from "src/applications/validator/user/user.validator";
 
 @Injectable()
 export class AuthService {

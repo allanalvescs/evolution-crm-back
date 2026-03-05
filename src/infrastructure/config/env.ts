@@ -28,6 +28,11 @@ class Env {
     @Transform(({ value }) => parseInt(value))
     @IsNumber()
     dbPort: number;
+
+    @IsString()
+    @IsNotEmpty()
+    rabbitmqUri: string;
+
 }
 
 export const env: Env = plainToInstance(Env, {
@@ -37,6 +42,7 @@ export const env: Env = plainToInstance(Env, {
     dbHost: process.env.DB_HOST,
     dbName: process.env.DB_NAME,
     dbPort: process.env.DB_PORT,
+    rabbitmqUri: process.env.RABBITMQ_URI,
 });
 
 const errors = validateSync(env);

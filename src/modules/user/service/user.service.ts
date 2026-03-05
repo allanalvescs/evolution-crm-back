@@ -6,7 +6,9 @@ import { UserMeScResponseDto } from "../dtos/user-me-sc.dto";
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository
+  ) {}
 
   async me(payload: { id: number, name: string, email: string, role: EUserRole }) {
     const user = await this.userRepository.findById(payload.id);

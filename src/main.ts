@@ -22,6 +22,7 @@ async function bootstrap() {
   SwaggerModule.setup('api-docs', app, documentFactory);
   
   console.log(`Documentação disponível em http://localhost:${process.env.PORT ?? 3000}/api-docs`);
+
   app.enableCors({
     origin: '*',
   });
