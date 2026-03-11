@@ -1,6 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
+import { env } from 'src/infrastructure/config/env';
 
 @Injectable()
 export class CnpjService {
@@ -10,7 +11,7 @@ export class CnpjService {
     try {
       const response = await firstValueFrom(
         this.httpService.get(
-          `https://brasilapi.com.br/api/cnpj/v1/${cnpj}`
+          `${process.env.BRASIL_API_CNPJ_URL}/${cnpj}`
         )
       );
 
