@@ -3,7 +3,7 @@ import { Test } from "@nestjs/testing";
 
 import * as bcrypt from "bcryptjs";
 import { UserRepository } from "src/domain/repositories/user.repository";
-import { User } from "src/domain/entities/user";
+import { User } from "src/domain/entities/user/user";
 
 jest.mock("bcryptjs");
 

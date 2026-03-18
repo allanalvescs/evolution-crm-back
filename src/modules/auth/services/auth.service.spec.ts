@@ -7,7 +7,7 @@ import { UserRepository } from "src/domain/repositories/user.repository";
 
 import { EUserRole } from "src/shared/enum/user-role.enum";
 import { HttpException, HttpStatus, UnauthorizedException } from "@nestjs/common";
-import { User } from "src/domain/entities/user";
+import { User } from "src/domain/entities/user/user";
 import { AuthValidator } from "src/applications/validator/auth/auth.validator";
 import { UserValidator } from "src/applications/validator/user/user.validator";
 import { SignupScResponseDto } from "../dtos/signup/signup-sc.dto";

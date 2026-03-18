@@ -4,7 +4,7 @@ import { hash } from "bcryptjs";
 import { EUserRole } from "src/shared/enum/user-role.enum";
 import { SigninCsDto } from "../dtos/signin/signin-cs.dto";
 import { JwtService } from "@nestjs/jwt";
-import { User } from "src/domain/entities/user";
+import { User } from "src/domain/entities/user/user";
 import { UserRepository } from "src/domain/repositories/user.repository";
 import { plainToInstance } from "class-transformer";
 import { SigninScResponseDto } from "../dtos/signin/signin-sc.dto";
