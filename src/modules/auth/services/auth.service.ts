@@ -11,6 +11,8 @@ import { SigninScResponseDto } from "../dtos/signin/signin-sc.dto";
 import { SignupScResponseDto } from "../dtos/signup/signup-sc.dto";
 import { AuthValidator } from "src/applications/validator/auth/auth.validator";
 import { UserValidator } from "src/applications/validator/user/user.validator";
+import { v4 as uuidv4 } from "uuid"
+import { EmailValueObject } from "src/domain/value-objetcts/email/email";
 
 @Injectable()
 export class AuthService {
@@ -40,13 +42,15 @@ export class AuthService {
 
     const passwordHash = await hash(password, 12);
 
-    const user = new User();
-    user.assign({
+    const user = new User(
+      uuidv4(),
       name,
-      email,
-      password: passwordHash,
-      role: EUserRole.ADMIN
-    });
+      null,
+      EmailValueObject.create(email),
+      null,
+      passwordHash,
+      EUserRole.ADMIN,
+    );
 
     const newUser = await this.userRepository.create(user);
 
@@ -57,9 +61,9 @@ export class AuthService {
 
   private generateToken(user: User) {
     const payload = { 
-      sub: user.id,
-      email: user.email,
-      role: user.role 
+      sub: user.getId(),
+      email: user.getEmail(),
+      role: user.getRole(), 
     };
 
     return this.jwtService.signAsync(payload);

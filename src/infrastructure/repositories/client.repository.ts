@@ -3,8 +3,8 @@ import { EntityRepository, EntityManager } from "@mikro-orm/postgresql";
 import { Injectable } from "@nestjs/common";
 import { Client as ClientDomain } from "src/domain/entities/client";
 import { ClientRepository } from "src/domain/repositories/client.repository";
-import { Client } from "src/infrastructure/entities/client.entity";
-import { ClientMapper } from "../mappers/client.mapper";
+import { Client } from "src/infrastructure/persistence/entities/client.entity";
+import { ClientMapper } from "../../persistence/mappers/client.mapper";
 
 @Injectable()
 export class MikroOrmClientRepository implements ClientRepository {

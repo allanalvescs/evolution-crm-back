@@ -1,8 +1,8 @@
 import { PrimaryKey, Property } from "@mikro-orm/core";
 
 export abstract class BaseEntity {
-  @PrimaryKey({ autoincrement: true })
-  id!: number;
+  @PrimaryKey({ type: 'uuid' })
+  id!: string;
 
   @Property({ onCreate: () => new Date().toISOString(), type: 'timestamp with time zone' })
   dtCreatedAt?: Date;

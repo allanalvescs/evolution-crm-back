@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { User } from "../../entities/user.entity";
+import { User } from "../../persistence/entities/user.entity";
 import { UserRepository } from "src/domain/repositories/user.repository";
 
 import { User as UserDomain } from "src/domain/entities/user/user";
 import { EntityManager, EntityRepository } from "@mikro-orm/postgresql";
 import { InjectRepository } from "@mikro-orm/nestjs";
-import { UserMapper } from "../mappers/user.mapper";
+import { UserMapper } from "../../persistence/mappers/user/user.mapper";
 
 @Injectable()
 export class MikroOrmUserRepository implements UserRepository {

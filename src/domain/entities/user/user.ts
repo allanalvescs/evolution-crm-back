@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { EmailValueObject } from "src/domain/value-objetcts/email/email";
 import { PhoneValueObject } from "src/domain/value-objetcts/phone/phone";
 import { EUserRole } from "src/shared/enum/user-role.enum";
@@ -10,7 +11,11 @@ export class User {
   private readonly email: EmailValueObject;
   private readonly phone: PhoneValueObject | null = null;
   private readonly password: string;
-  private readonly role: string;
+  private readonly role: EUserRole;
+
+  private dtLastLoginAt?: Date | null;
+  private dtCreatedAt: Date;
+  private dtUpdatedAt?: Date | null;
 
   private readonly roles = Object.values(EUserRole);
   constructor(
@@ -20,7 +25,7 @@ export class User {
     email: EmailValueObject,
     phone: PhoneValueObject | null,
     password: string,
-    role: string,
+    role: EUserRole,
   ) {
     this.validateRequiredFields(id, name, password, role);
         
@@ -34,6 +39,10 @@ export class User {
     this.phone = phone;
     this.password = password;
     this.role = role;
+
+    this.dtCreatedAt = new Date();
+    this.dtUpdatedAt = null;
+    this.dtLastLoginAt = null;
   }
 
   getId(): string {
@@ -56,7 +65,7 @@ export class User {
     return this.password;
   }
 
-  getRole(): string {
+  getRole(): EUserRole {
     return this.role;
   }
 

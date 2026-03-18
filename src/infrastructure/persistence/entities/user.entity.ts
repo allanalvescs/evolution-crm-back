@@ -1,10 +1,10 @@
 import { Entity, Property, Enum } from "@mikro-orm/core";
-import { EUserRole } from "../../shared/enum/user-role.enum";
+import { EUserRole } from "../../../shared/enum/user-role.enum";
 import { BaseEntity } from "./base-entity";
 @Entity({ 
     tableName: 'users'
 })
-export class User extends BaseEntity {
+export class UserEntity extends BaseEntity {
     @Property()
     name!: string;
 
@@ -22,6 +22,9 @@ export class User extends BaseEntity {
 
     @Property({ nullable: true })
     avatarUrl?: string;
+
+    @Property({ nullable: true })
+    phone?: string;
 
     @Property()
     @Enum(() => EUserRole)

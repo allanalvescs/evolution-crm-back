@@ -1,4 +1,4 @@
-import { Client } from "src/infrastructure/entities/client.entity";
+import { Client } from "src/infrastructure/persistence/entities/client.entity";
 import { Client as ClientDomain } from "src/domain/entities/client";
 import { EStatus } from "src/shared/enum/generic-status";
 
