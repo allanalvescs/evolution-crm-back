@@ -7,18 +7,16 @@ import { ApiCreatedResponse, ApiOperation } from "@nestjs/swagger";
 import { SigninScResponseDto } from "./dtos/signin/signin-sc.dto";
 import { SignupScResponseDto } from "./dtos/signup/signup-sc.dto";
 
-@Controller('auth')
+@Controller("auth")
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @ApiOperation({
-    summary: 'Login do usuário',
+    summary: "Login do usuário",
   })
   @ApiCreatedResponse({
-    description: 'Login realizado com sucesso',
-    type: SigninScResponseDto
+    description: "Login realizado com sucesso",
+    type: SigninScResponseDto,
   })
   @IsPublic()
   @Post("/signin")
@@ -27,7 +25,7 @@ export class AuthController {
   }
 
   @ApiOperation({
-    summary: 'Cadastro de novo usuário',
+    summary: "Cadastro de novo usuário",
   })
   @ApiCreatedResponse({
     type: SignupScResponseDto,

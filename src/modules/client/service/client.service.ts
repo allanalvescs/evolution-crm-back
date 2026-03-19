@@ -5,12 +5,12 @@ import { ClientCreateUseCase } from "src/applications/usecases/client/create/cli
 
 @Injectable()
 export class ClientService {
-  constructor (
+  constructor(
     private readonly cnpjService: CnpjService,
-    private readonly clientCreateUsecase: ClientCreateUseCase
+    private readonly clientCreateUsecase: ClientCreateUseCase,
   ) {}
 
-  async create({ data, userId }: { data: ClientCreateCsDto, userId: number }) {
+  async create({ data, userId }: { data: ClientCreateCsDto; userId: number }) {
     await this.cnpjService.consult(data.cpfCnpj);
 
     const client = await this.clientCreateUsecase.execute({

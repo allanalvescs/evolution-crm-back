@@ -18,9 +18,9 @@ describe("Suite Test AuthValidator", () => {
         AuthValidator,
         {
           provide: UserRepository,
-          useValue: mockUserRepository
-        }
-      ]
+          useValue: mockUserRepository,
+        },
+      ],
     }).compile();
 
     validator = module.get<AuthValidator>(AuthValidator);
@@ -51,7 +51,7 @@ describe("Suite Test AuthValidator", () => {
     expect(mockUserRepository.findByEmail).toHaveBeenCalledWith(email);
   });
 
-    it("should throw an error because credentials are invalid - password incorrect", async () => {
+  it("should throw an error because credentials are invalid - password incorrect", async () => {
     const email = "john.doe@example.com";
     const password = "password123";
 

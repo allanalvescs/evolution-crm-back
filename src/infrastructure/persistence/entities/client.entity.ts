@@ -5,32 +5,32 @@ import { EStatus } from "src/shared/enum/generic-status";
 import { User } from "./user.entity";
 
 @Entity({
-  tableName: 'clients'
+  tableName: "clients",
 })
 export class Client extends BaseEntity {
-    @Property()
-    name: string;
-    
-    @Property({ nullable: true })
-    companyName?: string;
+  @Property()
+  name: string;
 
-    @Property()
-    email: string;
+  @Property({ nullable: true })
+  companyName?: string;
 
-    @Property()
-    @Enum(() => EClientType)
-    type: EClientType;
+  @Property()
+  email: string;
 
-    @Property()
-    cpfCnpj: string;
+  @Property()
+  @Enum(() => EClientType)
+  type: EClientType;
 
-    @Property({ default: EStatus.ACTIVE })
-    @Enum(() => EStatus)
-    status: EStatus;
+  @Property()
+  cpfCnpj: string;
 
-    @Property({ nullable: true })
-    phone?: string;
+  @Property({ default: EStatus.ACTIVE })
+  @Enum(() => EStatus)
+  status: EStatus;
 
-    @ManyToOne(() => User, { fieldName: "id_user" })
-    idUser: User;
+  @Property({ nullable: true })
+  phone?: string;
+
+  @ManyToOne(() => User, { fieldName: "id_user" })
+  idUser: User;
 }

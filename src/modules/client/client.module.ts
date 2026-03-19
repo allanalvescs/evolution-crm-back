@@ -10,11 +10,10 @@ import { CnpjService } from "src/shared/services/cnpj.service";
     HttpModule.register({
       timeout: 5000,
       maxRedirects: 5,
-      
     }),
     UsecaseModule,
   ],
   controllers: [ClientController],
-  providers: [ClientService, CnpjService]
+  providers: [ClientService, CnpjService],
 })
 export class ClientModule {}

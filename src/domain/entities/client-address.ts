@@ -38,5 +38,4 @@ export class ClientAddress {
     this.dtCreatedAt = data.dtCreatedAt || this.dtCreatedAt;
     this.dtUpdatedAt = data.dtUpdatedAt || this.dtUpdatedAt;
   }
-
 }

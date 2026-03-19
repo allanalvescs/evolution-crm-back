@@ -8,8 +8,8 @@ export class EmailValueObject {
   }
 
   validate(): void {
-     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!this.value || typeof this.value !== 'string') {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!this.value || typeof this.value !== "string") {
       throw new Error("Email não pode ser vazio");
     }
 

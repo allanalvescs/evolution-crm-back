@@ -18,5 +18,5 @@ export interface ClientCreateUseCaseInterface {
     state: string;
     zipCode: string;
     number: number;
-  }
+  };
 }

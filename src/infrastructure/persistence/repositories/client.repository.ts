@@ -10,7 +10,7 @@ import { ClientMapper } from "../../persistence/mappers/client.mapper";
 export class MikroOrmClientRepository implements ClientRepository {
   constructor(
     @InjectRepository(Client) protected readonly orm: EntityRepository<Client>,
-    private readonly em: EntityManager
+    private readonly em: EntityManager,
   ) {}
 
   async create(client: ClientDomain): Promise<ClientDomain> {

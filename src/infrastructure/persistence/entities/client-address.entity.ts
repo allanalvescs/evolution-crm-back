@@ -3,7 +3,7 @@ import { BaseEntity } from "./base-entity";
 import { Client } from "./client.entity";
 
 @Entity({
-  tableName: 'client_address'
+  tableName: "client_address",
 })
 export class ClientAddress extends BaseEntity {
   @ManyToOne(() => Client, { fieldName: "id_client" })

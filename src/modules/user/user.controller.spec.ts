@@ -14,8 +14,8 @@ describe("Suite Test UserController", () => {
       providers: [
         {
           provide: UserService,
-          useValue: mockUserService
-        }
+          useValue: mockUserService,
+        },
       ],
     }).compile();
 
@@ -27,11 +27,11 @@ describe("Suite Test UserController", () => {
 
   describe("test me method", () => {
     it("should return user data", async () => {
-      const payload = { 
-        id: 1, 
-        name: "John Doe", 
+      const payload = {
+        id: 1,
+        name: "John Doe",
         email: "john.doe@example.com",
-        role: EUserRole.ADMIN 
+        role: EUserRole.ADMIN,
       };
       mockUserService.me.mockResolvedValue(payload);
 

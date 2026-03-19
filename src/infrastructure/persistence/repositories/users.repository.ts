@@ -11,14 +11,14 @@ import { UserMapper } from "../../persistence/mappers/user/user.mapper";
 export class MikroOrmUserRepository implements UserRepository {
   constructor(
     @InjectRepository(User) protected readonly orm: EntityRepository<User>,
-    private readonly em: EntityManager
+    private readonly em: EntityManager,
   ) {}
 
   async create(user: UserDomain): Promise<UserDomain> {
     const entity = UserMapper.toOrmEntity(user);
-    
+
     this.em.persist(entity);
-    
+
     await this.em.flush();
 
     return UserMapper.toDomainEntity(entity);
@@ -28,20 +28,23 @@ export class MikroOrmUserRepository implements UserRepository {
     await this.em.nativeDelete(User, { id });
   }
 
-  async update({ id, user }: { user: UserDomain; id: number }): Promise<UserDomain> {
+  async update({
+    id,
+    user,
+  }: {
+    user: UserDomain;
+    id: number;
+  }): Promise<UserDomain> {
     const entity = UserMapper.toOrmEntity(user);
-    
-    this.em.assign(
-      await this.em.findOneOrFail(User, { id, }),
-      entity,
-    );
+
+    this.em.assign(await this.em.findOneOrFail(User, { id }), entity);
 
     await this.em.flush();
 
     return UserMapper.toDomainEntity(entity);
   }
 
-  async findByEmail (email: string): Promise<UserDomain | null> {
+  async findByEmail(email: string): Promise<UserDomain | null> {
     const entity = await this.em.findOne(User, { email });
     return entity ? UserMapper.toDomainEntity(entity) : null;
   }

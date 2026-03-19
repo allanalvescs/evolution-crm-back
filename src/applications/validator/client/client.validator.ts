@@ -9,8 +9,9 @@ export class ClientValidator {
     const client = await this.clientRepository.findByCpfCnpj(cpfCnpj);
 
     if (client) {
-      throw new BadRequestException("Já existe um cliente cadastrado com este CPF/CNPJ");
+      throw new BadRequestException(
+        "Já existe um cliente cadastrado com este CPF/CNPJ",
+      );
     }
-
   }
 }

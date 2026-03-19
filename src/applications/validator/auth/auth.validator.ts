@@ -9,14 +9,14 @@ export class AuthValidator {
   async validate({ email, password }: { email: string; password: string }) {
     const user = await this.userRepository.findByEmail(email);
 
-    const isValidPassword = await compare(password, user?.password || '');
+    const isValidPassword = await compare(password, user?.password || "");
 
     if (!user || !isValidPassword) {
       throw new UnauthorizedException(
-        'Credenciais inválidas - Verifique se seu email e senha',
+        "Credenciais inválidas - Verifique se seu email e senha",
       );
     }
-    
+
     return user;
   }
 }

@@ -7,12 +7,10 @@ import { ClientValidator } from "src/applications/validator/client/client.valida
 export class ClientCreateUseCase {
   constructor(
     private readonly clientValidator: ClientValidator,
-    private readonly clientRepository: ClientRepository
+    private readonly clientRepository: ClientRepository,
   ) {}
 
   async execute({ userId, client, address }: ClientCreateUseCaseInterface) {
     await this.clientValidator.existBycpfCnpj(client.cpfCnpj);
-
-    
   }
 }

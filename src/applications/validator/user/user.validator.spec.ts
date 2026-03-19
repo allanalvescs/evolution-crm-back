@@ -15,8 +15,8 @@ describe("Suite Test UserValidator", () => {
         UserValidator,
         {
           provide: UserRepository,
-          useValue: mockUserRepository
-        }
+          useValue: mockUserRepository,
+        },
       ],
     }).compile();
 
@@ -28,7 +28,7 @@ describe("Suite Test UserValidator", () => {
     const email = "john.doe@example.com";
 
     mockUserRepository.findByEmail.mockResolvedValue(null);
-    
+
     await expect(validator.existByEmail(email)).resolves.toBeUndefined();
     expect(mockUserRepository.findByEmail).toHaveBeenCalledWith(email);
   });
@@ -37,11 +37,12 @@ describe("Suite Test UserValidator", () => {
     const email = "john.doe@example.com";
 
     mockUserRepository.findByEmail.mockResolvedValue(new User());
-    
+
     const promise = validator.existByEmail(email);
     await expect(promise).rejects.toThrow();
-    await expect(promise).rejects.toThrow("Já existe um usuário com esse email");
+    await expect(promise).rejects.toThrow(
+      "Já existe um usuário com esse email",
+    );
     expect(mockUserRepository.findByEmail).toHaveBeenCalledWith(email);
-
   });
 });

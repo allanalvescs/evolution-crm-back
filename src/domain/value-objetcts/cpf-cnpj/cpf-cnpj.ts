@@ -5,10 +5,7 @@ export class CpfCnpj {
   private cnpj: string;
   private type: EClientType;
 
-  constructor(
-    value: string,
-    type: EClientType,
-  ) {
+  constructor(value: string, type: EClientType) {
     this.validate(value, type);
 
     this.cpf = type === EClientType.PF ? value : "";
@@ -46,7 +43,7 @@ export class CpfCnpj {
     if (!value) {
       throw new Error("CPF ou CNPJ deve ser fornecido");
     }
-    
+
     if (!type || (type !== EClientType.PF && type !== EClientType.PJ)) {
       throw new Error("O tipo do cliente deve ser PF ou PJ");
     }
@@ -68,7 +65,7 @@ export class CpfCnpj {
     }
 
     if (type === EClientType.PF && value.length !== 11) {
-       throw new Error("CPF deve conter exatos 11 dígitos para PF");
+      throw new Error("CPF deve conter exatos 11 dígitos para PF");
     }
   }
 }

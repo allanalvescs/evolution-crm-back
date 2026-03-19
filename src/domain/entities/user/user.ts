@@ -3,7 +3,6 @@ import { EmailValueObject } from "src/domain/value-objetcts/email/email";
 import { PhoneValueObject } from "src/domain/value-objetcts/phone/phone";
 import { EUserRole } from "src/shared/enum/user-role.enum";
 
-
 export class User {
   private readonly id: string;
   private readonly name: string;
@@ -28,8 +27,8 @@ export class User {
     role: EUserRole,
   ) {
     this.validateRequiredFields(id, name, password, role);
-        
-    if (!this.roles.includes(role as EUserRole)) 
+
+    if (!this.roles.includes(role))
       throw new Error("role inválida, deve ser 'ADMIN' ou 'SUPERVISOR'");
 
     this.id = id;
@@ -73,13 +72,18 @@ export class User {
     return this.phone?.getPhone() ?? null;
   }
 
-  private validateRequiredFields(id: string, name: string, password: string, role: string): void {
-    if (!id) throw new Error('ID é obrigatório');
+  private validateRequiredFields(
+    id: string,
+    name: string,
+    password: string,
+    role: string,
+  ): void {
+    if (!id) throw new Error("ID é obrigatório");
 
-    if (!name) throw new Error('name é obrigatório');
+    if (!name) throw new Error("name é obrigatório");
 
-    if (!password) throw new Error('password é obrigatório');
+    if (!password) throw new Error("password é obrigatório");
 
-    if (!role) throw new Error('role é obrigatório');
+    if (!role) throw new Error("role é obrigatório");
   }
 }

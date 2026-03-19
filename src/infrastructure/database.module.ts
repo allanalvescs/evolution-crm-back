@@ -10,21 +10,17 @@ import { MikroOrmClientRepository } from "./repositories/client.repository";
 
 @Global()
 @Module({
-    imports: [MikroOrmModule.forFeature([
-        UserEntity,
-        Client,
-        ClientAddress
-    ])],
-    providers: [
-        {
-            provide: UserRepository,
-            useClass: MikroOrmUserRepository,
-        },
-        {
-            provide: ClientRepository,
-            useClass: MikroOrmClientRepository,
-        }
-    ],
-    exports: [UserRepository, ClientRepository],
+  imports: [MikroOrmModule.forFeature([UserEntity, Client, ClientAddress])],
+  providers: [
+    {
+      provide: UserRepository,
+      useClass: MikroOrmUserRepository,
+    },
+    {
+      provide: ClientRepository,
+      useClass: MikroOrmClientRepository,
+    },
+  ],
+  exports: [UserRepository, ClientRepository],
 })
 export class DatabaseModule {}

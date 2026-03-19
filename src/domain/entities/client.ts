@@ -27,7 +27,7 @@ export class Client {
   phone?: string;
   dtCreatedAt?: Date;
   dtUpdatedAt?: Date;
-  
+
   assign(data: IClient) {
     this.id = data.id || this.id;
     this.idUser = data.idUser || this.idUser;

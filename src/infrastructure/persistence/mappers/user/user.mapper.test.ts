@@ -4,7 +4,6 @@ import { UserEntity } from "../../entities/user.entity";
 import { UserMapper } from "./user.mapper";
 import { EmailValueObject } from "../../../../domain/value-objetcts/email/email";
 describe("UserMapper", () => {
-
   it("Should convert UserEntity to User", () => {
     const userEntity = new UserEntity();
     userEntity.id = "cb1a9f1e-8c3b-4d5e-9f1e-8c3b4d5e9f1e";
@@ -31,7 +30,7 @@ describe("UserMapper", () => {
       EmailValueObject.create("john.doe@example.com"),
       null,
       "hashedpassword",
-      EUserRole.ADMIN
+      EUserRole.ADMIN,
     );
 
     const userEntity = UserMapper.toPersistence(user);
@@ -52,9 +51,9 @@ describe("UserMapper", () => {
     userEntity.role = "INVALID_ROLE" as EUserRole;
     userEntity.dtCreatedAt = new Date();
 
-    expect(
-      () => UserMapper.toDomain(userEntity)
-    ).toThrow("role inválida, deve ser 'ADMIN' ou 'SUPERVISOR'");
+    expect(() => UserMapper.toDomain(userEntity)).toThrow(
+      "role inválida, deve ser 'ADMIN' ou 'SUPERVISOR'",
+    );
   });
 
   it("Should throw an error when email is invalid", () => {
@@ -66,10 +65,8 @@ describe("UserMapper", () => {
     userEntity.role = EUserRole.ADMIN;
     userEntity.dtCreatedAt = new Date();
 
-    expect(
-      () => UserMapper.toDomain(userEntity)
-    ).toThrow("Formato de email inválido");
-
+    expect(() => UserMapper.toDomain(userEntity)).toThrow(
+      "Formato de email inválido",
+    );
   });
-
 });

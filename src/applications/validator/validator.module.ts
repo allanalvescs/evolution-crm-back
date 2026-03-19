@@ -5,6 +5,6 @@ import { ClientValidator } from "./client/client.validator";
 
 @Module({
   providers: [UserValidator, AuthValidator, ClientValidator],
-  exports: [UserValidator, AuthValidator, ClientValidator]
+  exports: [UserValidator, AuthValidator, ClientValidator],
 })
 export class ValidatorModule {}

@@ -2,9 +2,7 @@ import { User } from "./user";
 import { EmailValueObject } from "../../value-objetcts/email/email";
 import { PhoneValueObject } from "../../value-objetcts/phone/phone";
 
-
 describe("User Entity", () => {
-
   it("Should create an instance of User with valid properties", () => {
     const email = EmailValueObject.create("john.doe@example.com");
     const user = new User(
@@ -23,17 +21,9 @@ describe("User Entity", () => {
   });
 
   it("Should throw an error if required properties are missing", () => {
-    const email = EmailValueObject.create("john.doe@example.com")
+    const email = EmailValueObject.create("john.doe@example.com");
     expect(() => {
-      new User(
-        "",
-        "John",
-        "Doe",
-        email,
-        null,
-        "hashedpassword123",
-        "ADMIN",
-      );
+      new User("", "John", "Doe", email, null, "hashedpassword123", "ADMIN");
     }).toThrow("ID é obrigatório");
 
     expect(() => {

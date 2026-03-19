@@ -1,4 +1,8 @@
-import { createParamDecorator, ExecutionContext, UnauthorizedException } from "@nestjs/common";
+import {
+  createParamDecorator,
+  ExecutionContext,
+  UnauthorizedException,
+} from "@nestjs/common";
 
 export const ActiveUserId = createParamDecorator<number>(
   (data: unknown, ctx: ExecutionContext) => {
@@ -6,9 +10,9 @@ export const ActiveUserId = createParamDecorator<number>(
     const userId = request.user?.id;
 
     if (!userId) {
-      throw new UnauthorizedException('Usuário não autenticado');
+      throw new UnauthorizedException("Usuário não autenticado");
     }
 
     return userId;
-  }
-)
+  },
+);

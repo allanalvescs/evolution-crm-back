@@ -8,7 +8,7 @@ export class PhoneValueObject {
     return new PhoneValueObject(formatted);
   }
 
-  getPhone():string {
+  getPhone(): string {
     return this.value;
   }
 

@@ -2,10 +2,10 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
   ValidationArguments,
-} from 'class-validator';
-import { EClientType } from 'src/shared/enum/client-type';
+} from "class-validator";
+import { EClientType } from "src/shared/enum/client-type";
 
-@ValidatorConstraint({ name: 'isCpfCnpj', async: false })
+@ValidatorConstraint({ name: "isCpfCnpj", async: false })
 export class IsCpfCnpjConstraint implements ValidatorConstraintInterface {
   validate(value: string, args: ValidationArguments): boolean {
     const object = args.object as any;
@@ -16,7 +16,7 @@ export class IsCpfCnpjConstraint implements ValidatorConstraintInterface {
     }
 
     // Remove qualquer caractere não numérico
-    const cleanValue = value.replace(/\D/g, '');
+    const cleanValue = value.replace(/\D/g, "");
 
     if (type === EClientType.PF) {
       // CPF deve ter exatos 11 dígitos
@@ -34,11 +34,11 @@ export class IsCpfCnpjConstraint implements ValidatorConstraintInterface {
     const type = object.type;
 
     if (type === EClientType.PF) {
-      return 'CPF deve conter exatos 11 dígitos para PF';
+      return "CPF deve conter exatos 11 dígitos para PF";
     } else if (type === EClientType.PJ) {
-      return 'CNPJ deve conter exatos 14 dígitos para PJ';
+      return "CNPJ deve conter exatos 14 dígitos para PJ";
     }
 
-    return 'cpfCnpj inválido para o tipo de cliente';
+    return "cpfCnpj inválido para o tipo de cliente";
   }
 }

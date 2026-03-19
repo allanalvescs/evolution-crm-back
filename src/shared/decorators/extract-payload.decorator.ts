@@ -1,5 +1,9 @@
-import { createParamDecorator, ExecutionContext, UnauthorizedException } from "@nestjs/common";
-import { IsEnum, IsInt, IsString, } from "class-validator";
+import {
+  createParamDecorator,
+  ExecutionContext,
+  UnauthorizedException,
+} from "@nestjs/common";
+import { IsEnum, IsInt, IsString } from "class-validator";
 import { EUserRole } from "../enum/user-role.enum";
 
 export class ExtractPayloadDto {
@@ -23,9 +27,9 @@ export const ExtractPayload = createParamDecorator<ExtractPayloadDto>(
     };
 
     if (!user) {
-      throw new UnauthorizedException('Usuário não autenticado');
+      throw new UnauthorizedException("Usuário não autenticado");
     }
 
     return user;
-  }
+  },
 );

@@ -15,16 +15,16 @@ export class FakeUserRepository implements UserRepository {
       EUserRole.ADMIN,
     ),
   ];
-  
+
   async create(user: User): Promise<void> {
     this.users.push(user);
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    return this.users.find(user => user.getEmail() === email) ?? null;
+    return this.users.find((user) => user.getEmail() === email) ?? null;
   }
 
   async findById(id: string): Promise<User | null> {
-    return this.users.find(user => user.getId() === id) ?? null;
+    return this.users.find((user) => user.getId() === id) ?? null;
   }
 }

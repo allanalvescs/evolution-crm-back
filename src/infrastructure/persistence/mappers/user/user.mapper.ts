@@ -7,8 +7,8 @@ export class UserMapper {
   static toDomain(entity: UserEntity): User {
     const email = EmailValueObject.create(entity.email);
     const phone = entity.phone ? PhoneValueObject.create(entity.phone) : null;
-    const role = entity.role as User["role"];
-    
+    const role = entity.role;
+
     return new User(
       entity.id,
       entity.name,

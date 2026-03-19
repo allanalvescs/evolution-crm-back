@@ -5,6 +5,6 @@ import { ValidatorModule } from "../validator/validator.module";
 @Module({
   imports: [ValidatorModule],
   providers: [ClientCreateUseCase],
-  exports: [ClientCreateUseCase]
+  exports: [ClientCreateUseCase],
 })
 export class UsecaseModule {}

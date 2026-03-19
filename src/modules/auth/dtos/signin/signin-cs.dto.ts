@@ -4,7 +4,7 @@ import { IsNotEmpty, IsString } from "class-validator";
 export class SigninCsDto {
   @ApiProperty({
     description: "Email do usuário",
-    example: "allan@gmail.com"
+    example: "allan@gmail.com",
   })
   @IsString()
   @IsNotEmpty()
@@ -12,7 +12,7 @@ export class SigninCsDto {
 
   @ApiProperty({
     description: "Senha do usuário",
-    example: "12345678"
+    example: "12345678",
   })
   @IsString()
   @IsNotEmpty()
