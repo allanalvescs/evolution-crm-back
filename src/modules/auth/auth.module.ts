@@ -4,6 +4,11 @@ import { AuthService } from "./services/auth.service";
 import { JwtModule } from "@nestjs/jwt"
 import { env } from "src/infrastructure/config/env";
 import { ValidatorModule } from "src/applications/validator/validator.module";
+import { BcryptPasswordHasher } from "src/infrastructure/services/bcrypt-password-hasher.service";
+import { JwtTokenGenerator } from "src/infrastructure/services/jwt-token-generator";
+
+export const PASSWORD_HASHER = "PasswordHasher";
+export const TOKEN_GENERATOR = "TokenGenerator";
 
 @Module({
     imports: [
@@ -15,7 +20,17 @@ import { ValidatorModule } from "src/applications/validator/validator.module";
         ValidatorModule
     ],
     controllers: [AuthController],
-    providers: [AuthService],
-    exports: [],
+    providers: [
+        AuthService,
+        {
+            provide: PASSWORD_HASHER,
+            useClass: BcryptPasswordHasher,
+        },
+        {
+            provide: TOKEN_GENERATOR,
+            useClass: JwtTokenGenerator,
+        },
+    ],
+    exports: [PASSWORD_HASHER],
 })
 export class AuthModule {}

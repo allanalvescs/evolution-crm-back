@@ -5,9 +5,9 @@ export class SignupScResponseDto {
     @Expose()
     @ApiProperty({
         description: "ID do usuário",
-        example: 1
+        example: "uuid"
     })
-    id: number;
+    id: string;
 
     @Expose()
     @ApiProperty({

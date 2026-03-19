@@ -1,18 +1,17 @@
 import { Injectable } from "@nestjs/common";
 import { SignupCsDto } from "../dtos/signup/signup-cs.dto";
-import { hash } from "bcryptjs";
 import { EUserRole } from "src/shared/enum/user-role.enum";
 import { SigninCsDto } from "../dtos/signin/signin-cs.dto";
-import { JwtService } from "@nestjs/jwt";
 import { User } from "src/domain/entities/user/user";
 import { UserRepository } from "src/domain/repositories/user.repository";
 import { plainToInstance } from "class-transformer";
 import { SigninScResponseDto } from "../dtos/signin/signin-sc.dto";
-import { SignupScResponseDto } from "../dtos/signup/signup-sc.dto";
 import { AuthValidator } from "src/applications/validator/auth/auth.validator";
 import { UserValidator } from "src/applications/validator/user/user.validator";
 import { v4 as uuidv4 } from "uuid"
 import { EmailValueObject } from "src/domain/value-objetcts/email/email";
+import { PasswordHasher } from "src/domain/contracts/password-hasher.interface";
+import { TokenGenerator } from "src/domain/contracts/token-generator.interface";
 
 @Injectable()
 export class AuthService {
@@ -20,7 +19,8 @@ export class AuthService {
     private readonly userValidator: UserValidator,
     private readonly authValidator: AuthValidator,
     private readonly userRepository: UserRepository,
-    private readonly jwtService: JwtService
+    private readonly tokenGenerator: TokenGenerator,
+    private readonly passwordHasher: PasswordHasher
   ) {}
 
   async signin(body: SigninCsDto) {
@@ -36,27 +36,23 @@ export class AuthService {
   }
 
   async signup(body: SignupCsDto) {
-    const { name, email, password } = body;
+    await this.userValidator.existByEmail(body.email);
 
-    await this.userValidator.existByEmail(email);
-
-    const passwordHash = await hash(password, 12);
+    const passwordHash = await this.passwordHasher.hash(body.password);
 
     const user = new User(
       uuidv4(),
-      name,
+      body.name,
       null,
-      EmailValueObject.create(email),
+      EmailValueObject.create(body.email),
       null,
       passwordHash,
       EUserRole.ADMIN,
     );
 
-    const newUser = await this.userRepository.create(user);
+    await this.userRepository.create(user);
 
-    const result = plainToInstance(SignupScResponseDto, newUser, { excludeExtraneousValues: true });
-
-    return result;
+    return user;
   }
 
   private generateToken(user: User) {
@@ -66,6 +62,6 @@ export class AuthService {
       role: user.getRole(), 
     };
 
-    return this.jwtService.signAsync(payload);
+    return this.tokenGenerator.generate(payload);
   }
 }
