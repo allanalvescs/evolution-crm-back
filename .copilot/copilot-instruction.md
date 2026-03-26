@@ -13,6 +13,12 @@ Sempre priorize:
 
 Evite gerar código que viole as regras de arquitetura ou que introduza complexidade desnecessária.
 
+> **Regras escopadas por contexto de arquivo:**
+> - Controllers → `.copilot/rules/controller-instruction.md`
+> - Use Cases → `.copilot/rules/usecase-instruction.md`
+> - Domain (entities, value objects, enums) → `.copilot/rules/domain-instruction.md`
+> - Testes → `.copilot/rules/testing-instruction.md`
+
 ---
 
 # Princípios de Arquitetura
@@ -36,27 +42,6 @@ Interface → Application → Domain
 Infrastructure → Application → Domain
 
 A camada **Domain deve permanecer pura**, sem dependência de frameworks, bibliotecas externas ou infraestrutura.
-
----
-
-# Domain Driven Design (DDD)
-
-Ao implementar regras de negócio:
-
-* Modele as regras de negócio dentro de **Entities** ou **Value Objects**
-* Utilize **Use Cases (Application Services)** para orquestrar fluxos
-* Evite colocar lógica de negócio em controllers ou infraestrutura
-
-Padrões recomendados:
-
-* Entities
-* Value Objects
-* Enums de domínio
-* Aggregates
-* Domain Services
-* Repositories (interfaces apenas no Domain)
-
-Implementações concretas de repositórios devem existir **apenas na camada Infrastructure**.
 
 ## Estrutura esperada das camadas
 
@@ -90,51 +75,6 @@ src/
 └── shared/                (Cross-cutting concerns: decorators, guards, utilitários)
     ├── decorators/
     └── services/          (Serviços utilitários não pertencentes ao domínio)
-```
-
-> **Regra importante**: Enums como `EUserRole`, `EClientType` e `EStatus` pertencem ao Domain e devem ficar em `src/domain/enums/`. **Nunca** importar do Domain para `src/shared/`.
-
----
-
-# Estratégia de Testes (TDD)
-
-O desenvolvimento deve seguir **Test Driven Development (TDD)**.
-
-Fluxo de implementação:
-
-1. Escreva um teste que falha
-2. Implemente o mínimo de código necessário para o teste passar
-3. Refatore mantendo todos os testes passando
-
-Regras:
-
-* Todo **Use Case deve possuir testes unitários**
-* Regras de negócio devem ser testadas de forma isolada
-* Evite testar frameworks ou infraestrutura em testes unitários
-* Utilize **mocks ou fakes** para dependências externas
-
-Estrutura de testes — localizada na **raiz do projeto** (fora de `src/`):
-
-```
-tests/
-├── unit/          (testes de entities, value objects, use cases, domain services)
-└── integration/   (testes de controllers, repositórios com banco real)
-```
-
-> **Nunca** criar arquivos `.spec.ts` ou `.test.ts` dentro de `src/`. Todos os testes ficam em `tests/`.
-
-Padrão de nomenclatura de testes:
-
-```
-should_<comportamento_esperado>_when_<condicao>
-```
-
-Exemplos:
-
-```
-should_create_user_when_valid_data_is_provided
-should_throw_error_when_email_already_exists
-should_return_empty_list_when_no_clients_exist
 ```
 
 ---
@@ -197,11 +137,6 @@ Garanta que:
 * A lógica de domínio permaneça independente de frameworks
 * Regras de negócio permaneçam no domínio
 * Infraestrutura seja facilmente substituível
-
-## Validators e Domain Services
-
-* **Validators de regras de negócio** (ex: verificar se email já existe) → `src/domain/services/`
-* **Validators de formato/entrada** (ex: CPF válido) → podem estar em `src/shared/validator/` se forem genéricos
 
 ---
 
