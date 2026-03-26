@@ -51,11 +51,48 @@ Padrões recomendados:
 
 * Entities
 * Value Objects
+* Enums de domínio
 * Aggregates
 * Domain Services
-* Repositories (interfaces apenas no Domain ou Application)
+* Repositories (interfaces apenas no Domain)
 
 Implementações concretas de repositórios devem existir **apenas na camada Infrastructure**.
+
+## Estrutura esperada das camadas
+
+```
+src/
+├── domain/
+│   ├── entities/          (Entidades de domínio puras)
+│   ├── value-objects/     (Value Objects com validação)
+│   ├── enums/             (Enums que pertencem ao domínio: roles, tipos, status)
+│   ├── repositories/      (Interfaces de repositório — sem implementação)
+│   ├── services/          (Domain Services e Validators de regras de negócio)
+│   └── contracts/         (Interfaces de serviços externos: hasher, token, etc.)
+│
+├── applications/
+│   └── usecases/          (Use Cases que orquestram o domínio)
+│
+├── infrastructure/
+│   ├── persistence/
+│   │   ├── entities/      (Entidades ORM — MikroORM @Entity)
+│   │   ├── repositories/  (Implementações concretas dos repositórios do domínio)
+│   │   └── mappers/       (Tradução entre entidade de domínio e entidade ORM)
+│   └── services/          (Implementações concretas de contracts: bcrypt, jwt, etc.)
+│
+├── modules/               (Interface / Presentation)
+│   └── <modulo>/
+│       ├── <modulo>.module.ts
+│       ├── <modulo>.controller.ts
+│       ├── service/       (Orquestração de Use Cases — sem lógica de negócio)
+│       └── dtos/          (DTOs de entrada e saída da API)
+│
+└── shared/                (Cross-cutting concerns: decorators, guards, utilitários)
+    ├── decorators/
+    └── services/          (Serviços utilitários não pertencentes ao domínio)
+```
+
+> **Regra importante**: Enums como `EUserRole`, `EClientType` e `EStatus` pertencem ao Domain e devem ficar em `src/domain/enums/`. **Nunca** importar do Domain para `src/shared/`.
 
 ---
 
@@ -76,19 +113,29 @@ Regras:
 * Evite testar frameworks ou infraestrutura em testes unitários
 * Utilize **mocks ou fakes** para dependências externas
 
-Estrutura de testes recomendada:
+Estrutura de testes — localizada na **raiz do projeto** (fora de `src/`):
 
+```
 tests/
-unit/
-integration/
+├── unit/          (testes de entities, value objects, use cases, domain services)
+└── integration/   (testes de controllers, repositórios com banco real)
+```
+
+> **Nunca** criar arquivos `.spec.ts` ou `.test.ts` dentro de `src/`. Todos os testes ficam em `tests/`.
 
 Padrão de nomenclatura de testes:
 
-should_<comportamento_esperado>*when*<condicao>
+```
+should_<comportamento_esperado>_when_<condicao>
+```
 
-Exemplo:
+Exemplos:
 
+```
 should_create_user_when_valid_data_is_provided
+should_throw_error_when_email_already_exists
+should_return_empty_list_when_no_clients_exist
+```
 
 ---
 
@@ -98,12 +145,12 @@ Utilize **TypeScript com strict mode habilitado**.
 
 Diretrizes gerais:
 
-* Prefira programação funcional sempre que possível
-* Evite classes quando funções simples forem suficientes
-* Mantenha funções pequenas e com responsabilidade única
+* Utiliza bem as boas práticas da Programação Orientada a Objeto (POO)
+* Mantenha métodos pequenos e com responsabilidade única sempre que possivel
 * Evite lógica profundamente aninhada
 * Utilize tipagem explícita sempre que possível
-* Siga o princípio **Single Responsibility Principle (SRP)**
+* Siga o princípios do **SOLID**
+
 
 Evite:
 
@@ -121,6 +168,8 @@ Quando ferramentas MCP estiverem disponíveis, utilize-as para:
 * Entender padrões existentes no código
 * Identificar arquitetura e organização dos módulos
 * Auxiliar na geração de planos de implementação
+* Utilizar **context7** MCP para consultar ferramentas de desenvolvimento a serem utilizados no projeto
+  * NestJS, RabbitMQ, Redis, supertest, jest, Mikro-ORM, 
 
 Antes de gerar novas implementações:
 
@@ -136,18 +185,23 @@ Evite introduzir novos padrões arquiteturais sem justificativa clara.
 
 Ao implementar uma funcionalidade:
 
-1. Entenda o requisito de domínio
-2. Crie ou atualize modelos de domínio se necessário
-3. Implemente o Use Case
-4. Escreva testes unitários
-5. Implemente adaptadores de infraestrutura
-6. Exponha a funcionalidade através da camada de interface (API ou controller)
+1. Entenda o requisito de domínio (consulte `docs/Produto.md`)
+2. Crie ou atualize modelos de domínio em `src/domain/` (entities, value objects, enums, interfaces de repositório)
+3. Implemente o Use Case em `src/applications/usecases/<modulo>/`
+4. Escreva testes unitários em `tests/unit/` antes de implementar a infraestrutura
+5. Implemente adaptadores de infraestrutura em `src/infrastructure/persistence/` (ORM entity, mapper, repositório concreto)
+6. Exponha a funcionalidade em `src/modules/<modulo>/` (controller + service de orquestração + DTOs)
 
 Garanta que:
 
 * A lógica de domínio permaneça independente de frameworks
 * Regras de negócio permaneçam no domínio
 * Infraestrutura seja facilmente substituível
+
+## Validators e Domain Services
+
+* **Validators de regras de negócio** (ex: verificar se email já existe) → `src/domain/services/`
+* **Validators de formato/entrada** (ex: CPF válido) → podem estar em `src/shared/validator/` se forem genéricos
 
 ---
 
@@ -204,7 +258,9 @@ Após implementar mudanças relevantes:
 
 Atualize a documentação técnica localizada em:
 
-.github/docs/
+```
+docs/
+```
 
 A documentação deve incluir:
 
