@@ -1,7 +1,6 @@
 import { User } from "src/domain/entities/user/user";
 import { UserRepository } from "src/domain/repositories/user.repository";
-import { EmailValueObject } from "src/domain/value-objetcts/email/email";
-import { EUserRole } from "src/shared/enum/user-role.enum";
+import { EUserRole } from "src/domain/enums/user-role.enum";
 
 export class FakeUserRepository implements UserRepository {
   private users: User[] = [
@@ -9,7 +8,7 @@ export class FakeUserRepository implements UserRepository {
       "uuid",
       "Allan",
       "",
-      EmailValueObject.create("allan@gmail.com"),
+      "allan@gmail.com",
       null,
       "123456",
       EUserRole.ADMIN,

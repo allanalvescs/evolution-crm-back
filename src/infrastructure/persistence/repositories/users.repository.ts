@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { User } from "../../persistence/entities/user.entity";
+import { UserEntity } from "../../persistence/entities/user.entity";
 import { UserRepository } from "src/domain/repositories/user.repository";
 
 import { User as UserDomain } from "src/domain/entities/user/user";
@@ -10,47 +10,26 @@ import { UserMapper } from "../../persistence/mappers/user/user.mapper";
 @Injectable()
 export class MikroOrmUserRepository implements UserRepository {
   constructor(
-    @InjectRepository(User) protected readonly orm: EntityRepository<User>,
+    @InjectRepository(UserEntity)
+    protected readonly orm: EntityRepository<UserEntity>,
     private readonly em: EntityManager,
   ) {}
 
-  async create(user: UserDomain): Promise<UserDomain> {
+  async create(user: UserDomain): Promise<void> {
     const entity = UserMapper.toOrmEntity(user);
 
     this.em.persist(entity);
 
     await this.em.flush();
-
-    return UserMapper.toDomainEntity(entity);
-  }
-
-  async delete(id: number): Promise<void> {
-    await this.em.nativeDelete(User, { id });
-  }
-
-  async update({
-    id,
-    user,
-  }: {
-    user: UserDomain;
-    id: number;
-  }): Promise<UserDomain> {
-    const entity = UserMapper.toOrmEntity(user);
-
-    this.em.assign(await this.em.findOneOrFail(User, { id }), entity);
-
-    await this.em.flush();
-
-    return UserMapper.toDomainEntity(entity);
   }
 
   async findByEmail(email: string): Promise<UserDomain | null> {
-    const entity = await this.em.findOne(User, { email });
+    const entity = await this.em.findOne(UserEntity, { email });
     return entity ? UserMapper.toDomainEntity(entity) : null;
   }
 
-  async findById(id: number): Promise<UserDomain | null> {
-    const entity = await this.em.findOne(User, { id });
+  async findById(id: string): Promise<UserDomain | null> {
+    const entity = await this.em.findOne(UserEntity, { id });
     return entity ? UserMapper.toDomainEntity(entity) : null;
   }
 }

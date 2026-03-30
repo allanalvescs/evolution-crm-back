@@ -7,31 +7,31 @@ dotenv.config();
 class Env {
   @IsString()
   @IsNotEmpty()
-  jwtSecret: string;
+  jwtSecret!: string;
 
   @IsString()
   @IsNotEmpty()
-  dbUser: string;
+  dbUser!: string;
 
   @IsString()
   @IsNotEmpty()
-  dbPassword: string;
+  dbPassword!: string;
 
   @IsString()
   @IsNotEmpty()
-  dbHost: string;
+  dbHost!: string;
 
   @IsString()
   @IsNotEmpty()
-  dbName: string;
+  dbName!: string;
 
   @Transform(({ value }) => parseInt(value))
   @IsNumber()
-  dbPort: number;
+  dbPort!: number;
 
   @IsString()
   @IsNotEmpty()
-  rabbitmqUri: string;
+  rabbitmqUri!: string;
 }
 
 export const env: Env = plainToInstance(Env, {
