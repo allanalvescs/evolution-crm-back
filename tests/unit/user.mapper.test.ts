@@ -23,15 +23,15 @@ describe("UserMapper", () => {
   });
 
   it("Should convert User to UserEntity", () => {
-    const user = new User(
-      "cb1a9f1e-8c3b-4d5e-9f1e-8c3b4d5e9f1e",
-      "John",
-      null,
-      "john.doe@example.com",
-      null,
-      "hashedpassword",
-      EUserRole.ADMIN,
-    );
+    const user = User.create({
+      id: "cb1a9f1e-8c3b-4d5e-9f1e-8c3b4d5e9f1e",
+      name: "John",
+      surname: null,
+      email: "john.doe@example.com",
+      phone: null,
+      password: "hashedpassword",
+      role: EUserRole.ADMIN,
+    });
 
     const userEntity = UserMapper.toOrmEntity(user);
 
