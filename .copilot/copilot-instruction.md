@@ -18,6 +18,7 @@ Evite gerar código que viole as regras de arquitetura ou que introduza complexi
 > - Use Cases → `.copilot/rules/usecase-instruction.md`
 > - Domain (entities, value objects, enums) → `.copilot/rules/domain-instruction.md`
 > - Testes → `.copilot/rules/testing-instruction.md`
+> - Git Workflow (branches, commits, pull requests) → `.copilot/rules/workflow-git.md`
 
 ---
 
@@ -79,11 +80,68 @@ src/
 
 ---
 
+# REST API
+
+Este projeto é uma **API REST**. Todas as implementações devem seguir as boas práticas REST.
+
+## Verbos HTTP
+
+| Verbo | Uso |
+|---|---|
+| `GET` | Leitura de recursos (não modifica estado) |
+| `POST` | Criação de um novo recurso |
+| `PUT` | Substituição completa de um recurso |
+| `PATCH` | Atualização parcial de um recurso |
+| `DELETE` | Remoção de um recurso |
+
+## Status codes semânticos
+
+| Código | Quando usar |
+|---|---|
+| `200 OK` | Requisição bem-sucedida com corpo de resposta |
+| `201 Created` | Recurso criado com sucesso |
+| `204 No Content` | Operação bem-sucedida sem corpo de resposta (ex: DELETE) |
+| `400 Bad Request` | Dados de entrada inválidos |
+| `401 Unauthorized` | Token ausente ou inválido |
+| `403 Forbidden` | Autenticado, mas sem permissão para a ação |
+| `404 Not Found` | Recurso não encontrado |
+| `409 Conflict` | Conflito de dados (ex: email ou CPF já cadastrado) |
+| `422 Unprocessable Entity` | Dados válidos em formato mas com regra de negócio violada |
+| `500 Internal Server Error` | Erro não tratado no servidor |
+
+## Nomenclatura de rotas
+
+* Use **substantivos no plural** para representar coleções: `/clients`, `/plans`, `/coupons`
+* Use **kebab-case** para recursos compostos: `/subscription-items`
+* **Nunca** use verbos nas rotas: ~~`/createClient`~~, ~~`/getPlans`~~
+* Rotas aninhadas para recursos dependentes: `/clients/:id/subscriptions`
+* Prefixe com versão: `/v1/clients`
+
+## Respostas
+
+* Toda resposta deve usar um **DTO tipado** (`*-sc.dto.ts`)
+* Erros devem retornar um objeto consistente com `message` e `statusCode`
+* Nunca exponha detalhes internos (stack trace, queries SQL) em respostas de erro
+
+
 # Estilo de Código
 
-Utilize **TypeScript com strict mode habilitado**.
+## TypeScript Strict Mode
 
-Diretrizes gerais:
+**Todo o código deve ser escrito com TypeScript em modo strict.** Isso é inegociável.
+
+```json
+// tsconfig.json
+{ "compilerOptions": { "strict": true } }
+```
+
+Isso implica obrigatoriamente:
+
+* Sem `any` explícito — use tipos precisos ou `unknown` com narrowing
+* Tipagem explícita em parâmetros e retornos de funções públicas
+* Sem acesso a propriedades possivelmente `undefined` sem checagem
+
+## Diretrizes gerais
 
 * Utiliza bem as boas práticas da Programação Orientada a Objeto (POO)
 * Mantenha métodos pequenos e com responsabilidade única sempre que possivel
@@ -138,54 +196,18 @@ Garanta que:
 * Regras de negócio permaneçam no domínio
 * Infraestrutura seja facilmente substituível
 
----
+## Cobertura de testes obrigatória
 
-# Workflow Git
+**Toda funcionalidade implementada deve ter testes.** Não existe código em produção sem teste correspondente.
 
-Branches devem ser criadas a partir da branch:
+| Componente | Tipo de teste | Onde |
+|---|---|---|
+| Entities e Value Objects | Unitário | `tests/unit/domain/` |
+| Domain Services / Validators | Unitário | `tests/unit/domain/` |
+| Use Cases | Unitário | `tests/unit/usecases/` |
+| Controllers | Integração | `tests/integration/` |
 
-develop
 
-Padrões de nomenclatura:
-
-feature/<nome-da-funcionalidade>
-fix/<descricao-do-bug>
-refactor/<contexto-da-refatoracao>
-
----
-
-# Commits
-
-As mensagens de commit devem seguir **Conventional Commits**.
-
-Exemplos:
-
-feat(auth): adiciona autenticação JWT
-fix(user): corrige validação de email
-refactor(order): simplifica lógica do agregado de pedidos
-test(payment): adiciona testes para serviço de pagamento
-
-Commits devem ser:
-
-* pequenos
-* focados
-* descritivos
-
----
-
-# Pull Requests
-
-Antes de abrir um Pull Request:
-
-* Todos os testes devem estar passando
-* Não devem existir erros de lint
-* O código deve respeitar as regras de arquitetura
-
-Execute:
-
-npm run lint:fix && npm test
-
----
 
 # Documentação Técnica
 
