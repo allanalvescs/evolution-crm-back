@@ -3,18 +3,18 @@ import {
   ExecutionContext,
   UnauthorizedException,
 } from "@nestjs/common";
-import { IsEnum, IsInt, IsString } from "class-validator";
-import { EUserRole } from "../enum/user-role.enum";
+import { IsEnum, IsString } from "class-validator";
+import { EUserRole } from "src/domain/enums/user-role.enum";
 
 export class ExtractPayloadDto {
-  @IsInt()
-  id: number;
+  @IsString()
+  id!: string;
 
   @IsString()
-  email: string;
+  email!: string;
 
   @IsEnum(EUserRole)
-  role: EUserRole;
+  role!: EUserRole;
 }
 
 export const ExtractPayload = createParamDecorator<ExtractPayloadDto>(

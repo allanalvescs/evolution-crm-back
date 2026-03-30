@@ -9,7 +9,7 @@ export class UserController {
 
   @Get("/me")
   @ApiBearerAuth()
-  me(@ExtractPayload() payload) {
+  me(@ExtractPayload() payload: { id: string; email: string; role: string }) {
     return this.userService.me(payload);
   }
 }

@@ -1,65 +1,47 @@
 import { Injectable } from "@nestjs/common";
 import { SignupCsDto } from "../dtos/signup/signup-cs.dto";
-import { EUserRole } from "src/shared/enum/user-role.enum";
 import { SigninCsDto } from "../dtos/signin/signin-cs.dto";
-import { User } from "src/domain/entities/user/user";
-import { UserRepository } from "src/domain/repositories/user.repository";
 import { plainToInstance } from "class-transformer";
 import { SigninScResponseDto } from "../dtos/signin/signin-sc.dto";
-import { AuthValidator } from "src/applications/validator/auth/auth.validator";
-import { UserValidator } from "src/applications/validator/user/user.validator";
-import { v4 as uuidv4 } from "uuid";
-import { EmailValueObject } from "src/domain/value-objetcts/email/email";
-import { PasswordHasher } from "src/domain/contracts/password-hasher.interface";
-import { TokenGenerator } from "src/domain/contracts/token-generator.interface";
+import { SignupScResponseDto } from "../dtos/signup/signup-sc.dto";
+import { SignupUseCase } from "src/applications/usecases/auth/signup/signup.usecase";
+import { SigninUseCase } from "src/applications/usecases/auth/signin/signin.usecase";
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userRepository: UserRepository,
-    private readonly passwordHasher: PasswordHasher,
-    private readonly userValidator: UserValidator,
+    private readonly signupUseCase: SignupUseCase,
+    private readonly signinUseCase: SigninUseCase,
   ) {}
 
-  // async signin(body: SigninCsDto) {
-  //     const { email, password } = body;
+  async signin(body: SigninCsDto): Promise<SigninScResponseDto> {
+    const result = await this.signinUseCase.execute({
+      email: body.email,
+      password: body.password,
+    });
 
-  //     const user = await this.authValidator.validate({ email, password });
-
-  //     const accessToken = await this.generateToken(user);
-
-  //     const result = plainToInstance(SigninScResponseDto, { accessToken }, { excludeExtraneousValues: true });
-
-  //     return result;
-  // }
-
-  async signup(body: SignupCsDto) {
-    await this.userValidator.existByEmail(body.email);
-
-    const passwordHash = await this.passwordHasher.hash(body.password);
-
-    const user = new User(
-      uuidv4(),
-      body.name,
-      null,
-      EmailValueObject.create(body.email),
-      null,
-      passwordHash,
-      EUserRole.ADMIN,
-    );
-
-    await this.userRepository.create(user);
-
-    return user;
+    return plainToInstance(SigninScResponseDto, result, {
+      excludeExtraneousValues: true,
+    });
   }
 
-  // private generateToken(user: User) {
-  //   const payload = {
-  //     sub: user.getId(),
-  //     email: user.getEmail(),
-  //     role: user.getRole(),
-  //   };
+  async signup(body: SignupCsDto): Promise<SignupScResponseDto> {
+    const user = await this.signupUseCase.execute({
+      name: body.name,
+      email: body.email,
+      password: body.password,
+    });
 
-  //   return this.tokenGenerator.generate(payload);
-  // }
+    const plain = {
+      id: user.getId(),
+      name: user.getName(),
+      surname: user.getSurname(),
+      email: user.getEmail(),
+      role: user.getRole(),
+    };
+
+    return plainToInstance(SignupScResponseDto, plain, {
+      excludeExtraneousValues: true,
+    });
+  }
 }

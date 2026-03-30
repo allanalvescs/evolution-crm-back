@@ -8,7 +8,7 @@ export class SignupCsDto {
   })
   @IsString()
   @IsNotEmpty()
-  name: string;
+  name!: string;
 
   @ApiProperty({
     description: "Email do usuário",
@@ -16,7 +16,7 @@ export class SignupCsDto {
   })
   @IsString()
   @IsNotEmpty()
-  email: string;
+  email!: string;
 
   @ApiProperty({
     description: "Senha do usuário",
@@ -24,5 +24,5 @@ export class SignupCsDto {
   })
   @IsString()
   @IsNotEmpty()
-  password: string;
+  password!: string;
 }

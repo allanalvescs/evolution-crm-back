@@ -2,26 +2,26 @@ import { Expose } from "class-transformer";
 
 export class UserMeScResponseDto {
   @Expose()
-  id: number;
+  id!: string;
 
   @Expose()
-  name: string;
+  name!: string;
 
   @Expose()
-  email: string;
+  email!: string;
 
   @Expose()
-  surname: string | null;
+  surname!: string | null;
 
   @Expose()
-  role: string;
+  role!: string;
 
   @Expose()
-  avatarUrl: string | null;
+  avatarUrl!: string | null;
 
   @Expose()
-  dtLastLoginAt: Date | null;
+  dtLastLoginAt!: Date | null;
 
   @Expose()
-  dtCreatedAt: Date;
+  dtCreatedAt!: Date;
 }
