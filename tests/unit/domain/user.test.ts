@@ -3,15 +3,15 @@ import { EUserRole } from "src/domain/enums/user-role.enum";
 
 describe("User Entity", () => {
   it("Should create an instance of User with valid properties", () => {
-    const user = new User(
-      "123e4567-e89b-12d3-a456-426614174000",
-      "John",
-      "Doe",
-      "john.doe@example.com",
-      null,
-      "hashedpassword123",
-      EUserRole.ADMIN,
-    );
+    const user = User.create({
+      id: "123e4567-e89b-12d3-a456-426614174000",
+      name: "John",
+      surname: "Doe",
+      email: "john.doe@example.com",
+      phone: null,
+      password: "hashedpassword123",
+      role: EUserRole.ADMIN,
+    });
 
     expect(user).toBeInstanceOf(User);
     expect(user.getId()).toBe("123e4567-e89b-12d3-a456-426614174000");
@@ -20,84 +20,81 @@ describe("User Entity", () => {
 
   it("Should throw an error if required properties are missing", () => {
     expect(() => {
-      new User(
-        "",
-        "John",
-        "Doe",
-        "john.doe@example.com",
-        null,
-        "hashedpassword123",
-        EUserRole.ADMIN,
-      );
+      User.create({
+        id: "",
+        name: "John",
+        surname: "Doe",
+        email: "john.doe@example.com",
+        phone: null,
+        password: "hashedpassword123",
+        role: EUserRole.ADMIN,
+      });
     }).toThrow("ID é obrigatório");
 
     expect(() => {
-      new User(
-        "123e4567-e89b-12d3-a456-426614174000",
-        "",
-        "",
-        "john.doe@example.com",
-        null,
-        "hashedpassword123",
-        EUserRole.ADMIN,
-      );
+      User.create({
+        id: "123e4567-e89b-12d3-a456-426614174000",
+        name: "",
+        surname: "",
+        email: "john.doe@example.com",
+        phone: null,
+        password: "hashedpassword123",
+        role: EUserRole.ADMIN,
+      });
     }).toThrow("name é obrigatório");
 
     expect(() => {
-      new User(
-        "123e4567-e89b-12d3-a456-426614174000",
-        "John",
-        "Doe",
-        "john.doe@example.com",
-        null,
-        "",
-        EUserRole.ADMIN,
-      );
+      User.create({
+        id: "123e4567-e89b-12d3-a456-426614174000",
+        name: "John",
+        surname: "Doe",
+        email: "john.doe@example.com",
+        phone: null,
+        password: "",
+        role: EUserRole.ADMIN,
+      });
     }).toThrow("password é obrigatório");
   });
 
   it("Should throw an error if email is invalid", () => {
     expect(() => {
-      new User(
-        "123e4567-e89b-12d3-a456-426614174000",
-        "John",
-        "",
-        "invalid-email",
-        null,
-        "hashedpassword123",
-        EUserRole.ADMIN,
-      );
+      User.create({
+        id: "123e4567-e89b-12d3-a456-426614174000",
+        name: "John",
+        surname: "",
+        email: "invalid-email",
+        phone: null,
+        password: "hashedpassword123",
+        role: EUserRole.ADMIN,
+      });
     }).toThrow("Formato de email inválido");
   });
 
   it("Should throw an error if phone is invalid", () => {
     expect(() => {
-      const email = "john.doe@example.com";
-      const phone = "invalid-phone";
-      new User(
-        "123e4567-e89b-12d3-a456-426614174000",
-        "John",
-        "Doe",
-        email,
-        phone,
-        "hashedpassword123",
-        EUserRole.ADMIN,
-      );
+      User.create({
+        id: "123e4567-e89b-12d3-a456-426614174000",
+        name: "John",
+        surname: "Doe",
+        email: "john.doe@example.com",
+        phone: "invalid-phone",
+        password: "hashedpassword123",
+        role: EUserRole.ADMIN,
+      });
     }).toThrow("Telefone inválido");
   });
 
   it("Should thow an error when role is invalid", () => {
     expect(() => {
-      const email = "jonhdoe@gmail.com";
-      new User(
-        "123e4567-e89b-12d3-a456-426614174000",
-        "John",
-        "",
-        email,
-        null,
-        "hashedpassword123",
-        "invalid-role" as unknown as EUserRole,
-      );
+      User.create({
+        id: "123e4567-e89b-12d3-a456-426614174000",
+        name: "John",
+        surname: "",
+        email: "jonhdoe@gmail.com",
+        phone: null,
+        password: "hashedpassword123",
+        role: "invalid-role" as unknown as EUserRole,
+      });
     }).toThrow("role inválida, deve ser 'ADMIN' ou 'SUPERVISOR'");
   });
 });

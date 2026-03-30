@@ -3,15 +3,15 @@ import { UserEntity } from "../../entities/user.entity";
 
 export class UserMapper {
   static toDomainEntity(entity: UserEntity): User {
-    return new User(
-      entity.id,
-      entity.name,
-      entity.surname || null,
-      entity.email,
-      entity.phone ?? null,
-      entity.password,
-      entity.role,
-    );
+    return User.create({
+      id: entity.id,
+      name: entity.name,
+      surname: entity.surname || null,
+      email: entity.email,
+      phone: entity.phone ?? null,
+      password: entity.password,
+      role: entity.role,
+    });
   }
 
   static toOrmEntity(user: User): UserEntity {

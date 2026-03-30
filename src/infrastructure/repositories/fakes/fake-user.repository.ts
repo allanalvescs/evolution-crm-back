@@ -4,15 +4,15 @@ import { EUserRole } from "src/domain/enums/user-role.enum";
 
 export class FakeUserRepository implements UserRepository {
   private users: User[] = [
-    new User(
-      "uuid",
-      "Allan",
-      "",
-      "allan@gmail.com",
-      null,
-      "123456",
-      EUserRole.ADMIN,
-    ),
+    User.create({
+      id: "uuid",
+      name: "Allan",
+      surname: "",
+      email: "allan@gmail.com",
+      phone: null,
+      password: "123456",
+      role: EUserRole.ADMIN,
+    }),
   ];
 
   async create(user: User): Promise<void> {

@@ -4,7 +4,6 @@ import { UserRepository } from "src/domain/repositories/user.repository";
 import { UserValidator } from "src/applications/validator/user/user.validator";
 import { PasswordHasher } from "src/domain/contracts/password-hasher.interface";
 import { User } from "src/domain/entities/user/user";
-import { EmailValueObject } from "src/domain/value-objects/email/email";
 import { EUserRole } from "src/domain/enums/user-role.enum";
 import { SignupUseCaseInterface } from "./signup-interface.usecase";
 
@@ -21,15 +20,15 @@ export class SignupUseCase {
 
     const passwordHash = await this.passwordHasher.hash(data.password);
 
-    const user = new User(
-      uuidv4(),
-      data.name,
-      data.surname ?? null,
-      data.email,
-      null,
-      passwordHash,
-      EUserRole.ADMIN,
-    );
+    const user = User.create({
+      id: uuidv4(),
+      name: data.name,
+      surname: data.surname ?? null,
+      email: data.email,
+      phone: null,
+      password: passwordHash,
+      role: EUserRole.ADMIN,
+    });
 
     await this.userRepository.create(user);
 

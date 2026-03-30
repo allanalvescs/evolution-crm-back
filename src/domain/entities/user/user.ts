@@ -2,6 +2,16 @@ import { EmailValueObject } from "src/domain/value-objects/email/email";
 import { PhoneValueObject } from "src/domain/value-objects/phone/phone";
 import { EUserRole } from "src/domain/enums/user-role.enum";
 
+type UserProps = {
+  id: string;
+  name: string;
+  surname: string | null;
+  email: string;
+  phone: string | null;
+  password: string;
+  role: EUserRole;
+};
+
 export class User {
   private readonly id: string;
   private readonly name: string;
@@ -41,6 +51,18 @@ export class User {
     this.dtCreatedAt = new Date();
     this.dtUpdatedAt = null;
     this.dtLastLoginAt = null;
+  }
+
+  static create({
+    id,
+    name,
+    surname,
+    email,
+    phone,
+    password,
+    role,
+  }: UserProps): User {
+    return new User(id, name, surname, email, phone, password, role);
   }
 
   getId(): string {
