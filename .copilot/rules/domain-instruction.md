@@ -20,17 +20,33 @@ A camada Domain **NUNCA** importa de:
 Entidades representam conceitos do domínio com identidade própria.
 
 ```typescript
+type RecursoProps = {
+  id: string;
+  name: string;
+  createdAt: Date;
+};
+
 export class RecursoDomain {
-  constructor(
-    public readonly id: string,
-    public name: string,
-    public readonly createdAt: Date,
+  private constructor(
+    private readonly id: string,
+    private name: string,
+    private readonly createdAt: Date,
   ) {
     if (!name) throw new Error('Name is required');
   }
+
+  static create(props: RecursoProps): RecursoDomain {
+    return new RecursoDomain(props.id, props.name, props.createdAt);
+  }
+
+  getId(): string { return this.id; }
+  getName(): string { return this.name; }
 }
 ```
 
+- O construtor é **privado** — nenhuma camada externa instancia a entidade diretamente
+- O método estático `create(props)` é o único ponto de entrada para criar a entidade
+- Toda criação de instância passa pelo `create()`, inclusive em mappers, fakes e testes
 - Construtor realiza validações básicas de invariantes
 - Sem decorators de framework (`@Entity`, `@Injectable`, etc.)
 - Sem imports de ORM ou HTTP
