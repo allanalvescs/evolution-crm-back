@@ -4,6 +4,6 @@ export type TokenPayload = {
   role: string;
 };
 
-export interface TokenGenerator {
-  generate(payload: TokenPayload): Promise<string>;
+export abstract class TokenGenerator {
+  abstract generate(payload: TokenPayload): Promise<string>;
 }

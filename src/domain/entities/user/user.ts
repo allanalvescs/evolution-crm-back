@@ -1,7 +1,6 @@
-import dayjs from "dayjs";
-import { EmailValueObject } from "src/domain/value-objetcts/email/email";
-import { PhoneValueObject } from "src/domain/value-objetcts/phone/phone";
-import { EUserRole } from "src/shared/enum/user-role.enum";
+import { EmailValueObject } from "src/domain/value-objects/email/email";
+import { PhoneValueObject } from "src/domain/value-objects/phone/phone";
+import { EUserRole } from "src/domain/enums/user-role.enum";
 
 export class User {
   private readonly id: string;
@@ -21,8 +20,8 @@ export class User {
     id: string,
     name: string,
     surname: string | null,
-    email: EmailValueObject,
-    phone: PhoneValueObject | null,
+    email: string,
+    phone: string | null,
     password: string,
     role: EUserRole,
   ) {
@@ -34,8 +33,8 @@ export class User {
     this.id = id;
     this.name = name;
     this.surname = surname;
-    this.email = email;
-    this.phone = phone;
+    this.email = EmailValueObject.create(email);
+    this.phone = phone ? PhoneValueObject.create(phone) : null;
     this.password = password;
     this.role = role;
 

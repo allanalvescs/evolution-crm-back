@@ -1,4 +1,4 @@
-import { EClientType } from "../../../shared/enum/client-type";
+import { EClientType } from "src/domain/enums/client-type.enum";
 
 export class CpfCnpj {
   private cpf: string;
