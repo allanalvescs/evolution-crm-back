@@ -16,6 +16,7 @@ describe("Auth (e2e)", () => {
     }).compile();
 
     app = moduleRef.createNestApplication();
+    app.useLogger(false);
     app.useGlobalPipes(new ValidationPipe());
     await app.init();
 
