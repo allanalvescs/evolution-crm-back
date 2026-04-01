@@ -37,6 +37,12 @@ git checkout -b feature/<nome-da-funcionalidade>
 
 Implemente a funcionalidade respeitando as diretrizes de arquitetura em `.copilot/copilot-instruction.md`.
 
+Se a implementação envolver mudança de schema de banco de dados, gere a migration correspondente:
+
+```bash
+npm run migration:create
+```
+
 ### 4. Revisar as mudanças antes de commitar
 
 ```bash
@@ -64,6 +70,8 @@ git add -p                     # modo interativo: revisa hunk a hunk
 git commit -m "<type>(<scope>): <descrição curta>"
 ```
 
+O **Husky** executa automaticamente o `lint-staged` no pre-commit, aplicando `prettier --write` em todos os arquivos `.ts` staged. Nenhuma ação manual é necessária para formatação.
+
 > Repita os passos 4, 5 e 6 para cada unidade lógica de mudança. Prefira múltiplos commits pequenos a um único commit grande.
 
 ---
@@ -81,7 +89,7 @@ As mensagens de commit devem seguir **Conventional Commits**.
 | `refactor` | Mudança interna sem alteração de comportamento externo |
 | `test` | Adição ou correção de testes |
 | `docs` | Atualização de documentação técnica |
-| `chore` | Tarefas de manutenção (configs, deps, scripts) |
+| `chore` | Tarefas de manutenção (configs, deps, scripts, migrations) |
 
 ## Formato
 
@@ -98,6 +106,7 @@ refactor(order): extrai regra de desconto para domain service
 test(payment): adiciona testes unitários para PaymentUseCase
 docs(client): atualiza documentação do módulo de clientes
 chore(deps): atualiza mikro-orm para versão 6.x
+chore(infra): cria migration para tabela de empresas
 ```
 
 ## Regras
@@ -105,7 +114,21 @@ chore(deps): atualiza mikro-orm para versão 6.x
 * Commits devem ser **atômicos** — uma única responsabilidade por commit
 * Nunca combine `feat` + `fix` no mesmo commit
 * A descrição deve estar no **imperativo** e ser **clara sem contexto adicional**
-* Escopo (`scope`) deve refletir o módulo ou camada afetada: `auth`, `user`, `client`, `domain`, `infra`
+* Escopo (`scope`) deve refletir o módulo ou camada afetada: `auth`, `user`, `company`, `domain`, `infra`
+
+---
+
+# Testes
+
+Todo código implementado deve ter cobertura de testes. Os tipos de teste e seus sufixos de arquivo são:
+
+| Tipo | Sufixo | Localização | O que testar |
+|---|---|---|---|
+| Unitário | `.test.ts` | `tests/unit/` | Lógica isolada; dependências externas são mockadas |
+| Integração | `.int.test.ts` | `tests/integration/` | Interação entre camadas (ex: usecase → validator → repository fake) |
+| E2E | `.e2e-test.ts` | `tests/e2e/` | Fluxo completo: preparo do banco, chamada HTTP, validação de status, body e erros |
+
+> Consulte `.copilot/rules/testing-instruction.md` para as convenções completas de testes.
 
 ---
 
@@ -149,10 +172,22 @@ Todos os critérios abaixo devem ser atendidos antes de abrir o PR:
 * Código respeitando as regras de arquitetura
 
 ```bash
-npm run lint:fix && npm test
+npm run lint && npm test
 ```
 
-### 2. Publicar a branch no repositório remoto
+> `npm run lint` já inclui `--fix` internamente — não existe script separado `lint:fix`.
+
+### 2. Criar a documentação técnica
+
+Antes de abrir o PR, crie ou atualize o arquivo de documentação da funcionalidade:
+
+```
+docs/issues/<nome-da-funcionalidade>.md
+```
+
+Siga o padrão de `docs/issues/user-implementation.md` como referência: visão geral, regras de negócio, modelos de domínio, fluxos, use cases, infraestrutura, testes e débitos técnicos.
+
+### 3. Publicar a branch no repositório remoto
 
 Na primeira vez que fizer push da branch:
 
@@ -166,12 +201,12 @@ Pushes subsequentes:
 git push
 ```
 
-### 3. Abrir o Pull Request via MCP GitHub
+### 4. Abrir o Pull Request via MCP GitHub
 
 Utilize a integração MCP com o GitHub para criar o Pull Request. O PR deve:
 
 * Ter como **base** a branch `develop`
 * Seguir o template definido em `.github/template/merge-request.md`
-* Incluir no corpo do PR a documentação técnica gerada em `docs/issues/<nome-da-funcionalidade>/`
+* Referenciar a documentação técnica gerada em `docs/issues/<nome-da-funcionalidade>.md`
 
-> Garanta que a documentação técnica em `docs/issues/<nome-da-funcionalidade>/` esteja criada e atualizada antes de abrir o PR.
+> Garanta que a documentação técnica em `docs/issues/<nome-da-funcionalidade>.md` esteja criada e atualizada antes de abrir o PR.

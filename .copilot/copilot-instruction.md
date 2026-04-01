@@ -158,28 +158,20 @@ Evite:
 
 ---
 
-# Desenvolvimento Assistido por IA (Integração com MCP)
+# Validação de Documentação
 
-Quando ferramentas MCP estiverem disponíveis, utilize-as para:
-
-* Analisar o contexto do repositório
-* Entender padrões existentes no código
-* Identificar arquitetura e organização dos módulos
-* Auxiliar na geração de planos de implementação
-* Utilizar **context7** MCP para consultar ferramentas de desenvolvimento a serem utilizados no projeto
-  * NestJS, RabbitMQ, Redis, supertest, jest, Mikro-ORM, 
-
-Antes de gerar novas implementações:
-
-1. Analise módulos existentes
-2. Reutilize padrões já presentes no projeto
-3. Mantenha consistência arquitetural
+Use a ferramenta **context7** MCP para pesquisar e validar as APIs do NestJS, mikro-orm, class-validator e outras bibliotecas antes de implementar estruturas. Isso garante que as implementações sigam as convenções atuais da biblioteca e evitem padrões obsoletos.
 
 Evite introduzir novos padrões arquiteturais sem justificativa clara.
 
 ---
 
 # Fluxo de Implementação
+Antes de gerar novas implementações:
+
+1. Analise módulos existentes
+2. Reutilize padrões já presentes no projeto
+3. Mantenha consistência arquitetural
 
 Ao implementar uma funcionalidade:
 
@@ -195,6 +187,8 @@ Garanta que:
 * A lógica de domínio permaneça independente de frameworks
 * Regras de negócio permaneçam no domínio
 * Infraestrutura seja facilmente substituível
+
+
 
 ## Cobertura de testes obrigatória
 
