@@ -1,6 +1,7 @@
 import { Migration } from "@mikro-orm/migrations";
 
 export class Migration20260401122632 extends Migration {
+  // eslint-disable-next-line @typescript-eslint/require-await
   override async up(): Promise<void> {
     this.addSql(`
       create table "companies" (
@@ -36,6 +37,7 @@ export class Migration20260401122632 extends Migration {
     `);
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   override async down(): Promise<void> {
     this.addSql(
       `alter table "users" drop constraint if exists "users_company_id_foreign";`,

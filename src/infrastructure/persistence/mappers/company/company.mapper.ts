@@ -1,5 +1,6 @@
 import { Company } from "src/domain/entities/company/company";
 import { CompanyEntity } from "../../entities/company.entity";
+import { UserEntity } from "../../entities/user.entity";
 
 export class CompanyMapper {
   static toDomainEntity(entity: CompanyEntity): Company {
@@ -23,7 +24,9 @@ export class CompanyMapper {
     entity.companyName = company.getCompanyName();
     entity.cnpj = company.getCnpj();
     entity.phone = company.getPhone() ?? undefined;
-    entity.user = { id: company.getUserId() } as any;
+    const userRef = new UserEntity();
+    userRef.id = company.getUserId();
+    entity.user = userRef;
 
     return entity;
   }
