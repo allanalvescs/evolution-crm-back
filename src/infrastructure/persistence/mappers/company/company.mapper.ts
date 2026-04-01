@@ -16,7 +16,7 @@ export class CompanyMapper {
     });
   }
 
-  static toOrmEntity(company: Company): CompanyEntity {
+  static toOrmEntity(company: Company, userRef: UserEntity): CompanyEntity {
     const entity = new CompanyEntity();
 
     entity.id = company.getId();
@@ -24,8 +24,6 @@ export class CompanyMapper {
     entity.companyName = company.getCompanyName();
     entity.cnpj = company.getCnpj();
     entity.phone = company.getPhone() ?? undefined;
-    const userRef = new UserEntity();
-    userRef.id = company.getUserId();
     entity.user = userRef;
 
     return entity;

@@ -65,7 +65,8 @@ describe("CompanyMapper", () => {
   describe("toOrmEntity", () => {
     it("should map domain entity to ORM entity correctly", () => {
       const domain = makeCompanyDomain();
-      const entity = CompanyMapper.toOrmEntity(domain);
+      const userRef = makeUserEntity();
+      const entity = CompanyMapper.toOrmEntity(domain, userRef);
 
       expect(entity).toBeInstanceOf(CompanyEntity);
       expect(entity.id).toBe("uuid-company-001");
@@ -86,7 +87,7 @@ describe("CompanyMapper", () => {
         userId: "uuid-user-001",
       });
 
-      const entity = CompanyMapper.toOrmEntity(domain);
+      const entity = CompanyMapper.toOrmEntity(domain, makeUserEntity());
       expect(entity.phone).toBe("(11) 98765-4321");
     });
   });
