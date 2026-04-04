@@ -23,7 +23,6 @@ Entidades representam conceitos do domínio com identidade própria.
 type RecursoProps = {
   id: string;
   name: string;
-  createdAt: Date;
 };
 
 export class RecursoDomain {
@@ -33,10 +32,15 @@ export class RecursoDomain {
     private readonly createdAt: Date,
   ) {
     if (!name) throw new Error('Name is required');
+
+    this.id = id;
+    this.name = name
+
+    this.createdAt = new Date();
   }
 
   static create(props: RecursoProps): RecursoDomain {
-    return new RecursoDomain(props.id, props.name, props.createdAt);
+    return new RecursoDomain(props.id, props.name);
   }
 
   getId(): string { return this.id; }

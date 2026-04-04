@@ -16,3 +16,12 @@ Os testes não devem ser apenas lineares, a ideia de criar os testes é para des
 - Dado o @.copilot-instruction.md, eu quero que extraia o workflow do Git e repasse para uma documentação separada, a ideia é segregar ao maximo as documentações em pequenos fragmentos onde serão trabalhados em baby-steps. Você pode passar esse tipo essa documentação para @.copilot/rules/workflow-git
 
 - Dado o @docs/Produto.md e @.copilot/copilot-instruction.md, eu quero que seja gerado um planejamento de implementação para a feature de cadastro da empresa (feature/company) em @docs/tasks/company-implementation.md .Deve ser gerado uma nova migration criando a entidade company com base nos campos que a propria deve obter, além dos seus relacionamentos com outras entidades (users). Também deve ser criado uma classe de dominio para se validar as regra de negócio da entidade de dominio seguindo as convenções @.copilot/rules/domain-instruction.md, analise a necessidade de criar value-objects para valores imutaveis. Gere uma interface de repositorio para as ações necessárias no cadastro da company, essa interface deve ser utilizada na injeção de dependência afim de evitar acoplamento alto. Gerar uma fakeCompanyRepository que implemente a interface para simular o banco de dados e usado em testes de integração (camadas que interagem entre si como usecase -> validators). Implementação do repository dentro da camada de infrastructure onde será gerado a persistência dos dados com o ORM usado no projeto (mikro-orm). Implementação de usecase para orquestrar o fluxo de cadastro como um todo. Garanta que todas as camadas possuem testes (unitário e integração), após finalizar a implementação gere um teste de API (/tests/e2e/company.e2e.test.ts). Gostaria que esse planejamento esteja organizado em to-do-list para eu acompanhar todas as etapas de desenvolvimento, garantindo que esteja seguindo as convenções desejadas por mim
+
+Capturando alterações detectadas no Staged Changes
+Gere um resumo estruturado da fase Domain contendo:
+  - Entidades criadas
+  - Regras de negócio
+  - Decisões arquiteturais
+  - Pontos de atenção
+
+Salve em docs/phases/01-domain-summary.md

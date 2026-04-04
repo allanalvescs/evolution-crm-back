@@ -14,14 +14,12 @@ describe("Email Value Object", () => {
   });
 
   it("Should throw an error when creating an Email with empty string", () => {
-    expect(() => EmailValueObject.create("")).toThrow(
-      "Email não pode ser vazio",
-    );
+    expect(() => EmailValueObject.create("")).toThrow("Email é obrigatório");
   });
 
   it("Should throw an error when creating an Email with null", () => {
     expect(() => EmailValueObject.create(null as any)).toThrow(
-      "Email não pode ser vazio",
+      "Email é obrigatório",
     );
   });
 });

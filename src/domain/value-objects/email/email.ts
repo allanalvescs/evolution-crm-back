@@ -10,7 +10,7 @@ export class EmailValueObject {
   validate(): void {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!this.value || typeof this.value !== "string") {
-      throw new Error("Email não pode ser vazio");
+      throw new Error("Email é obrigatório");
     }
 
     const trimmedValue = this.value.trim().toLowerCase();
