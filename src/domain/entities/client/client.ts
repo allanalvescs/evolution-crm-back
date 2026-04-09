@@ -17,7 +17,7 @@ export type ClientProps = {
   cpf: string | null;
   cnpj: string | null;
   phone: string | null;
-  address: AddressProps;
+  address?: AddressProps;
   companyId: string;
   userId: string;
 };
@@ -32,7 +32,7 @@ export class Client {
     private readonly cpf: CpfValueObject | null,
     private readonly cnpj: CnpjValueObject | null,
     private readonly phone: PhoneValueObject | null,
-    private readonly address: AddressValueObject,
+    private readonly address: AddressValueObject | null,
     private readonly companyId: string,
     private readonly userId: string,
   ) {
@@ -54,7 +54,7 @@ export class Client {
     this.cpf = cpf;
     this.cnpj = cnpj;
     this.phone = phone;
-    this.address = address;
+    this.address = address || null;
     this.companyId = companyId;
     this.userId = userId;
   }
@@ -64,7 +64,9 @@ export class Client {
     const cpf = props.cpf ? CpfValueObject.create(props.cpf) : null;
     const cnpj = props.cnpj ? CnpjValueObject.create(props.cnpj) : null;
     const phone = props.phone ? PhoneValueObject.create(props.phone) : null;
-    const address = AddressValueObject.create(props.address);
+    const address = props.address
+      ? AddressValueObject.create(props.address)
+      : null;
 
     return new Client(
       props.id,
@@ -105,7 +107,7 @@ export class Client {
   getPhone(): PhoneValueObject | null {
     return this.phone;
   }
-  getAddress(): AddressValueObject {
+  getAddress(): AddressValueObject | null {
     return this.address;
   }
   getCompanyId(): string {

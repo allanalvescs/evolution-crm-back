@@ -6,6 +6,7 @@ import { UserEntity } from "./persistence/entities/user.entity";
 import { CompanyRepository } from "src/domain/repositories/company.repository";
 import { MikroOrmCompanyRepository } from "./repositories/companies.repository";
 import { CompanyEntity } from "./persistence/entities/company.entity";
+import { ClientRepository } from "src/domain/repositories/client.repository";
 
 @Global()
 @Module({
@@ -19,7 +20,11 @@ import { CompanyEntity } from "./persistence/entities/company.entity";
       provide: CompanyRepository,
       useClass: MikroOrmCompanyRepository,
     },
+    {
+      provide: ClientRepository,
+      useClass: MikroOrmClientRepository,
+    },
   ],
-  exports: [UserRepository, CompanyRepository],
+  exports: [UserRepository, CompanyRepository, ClientRepository],
 })
 export class DatabaseModule {}

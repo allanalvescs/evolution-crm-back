@@ -25,3 +25,12 @@ Gere um resumo estruturado da fase Domain contendo:
   - Pontos de atenção
 
 Salve em docs/phases/01-domain-summary.md
+
+-----
+Gere um resumo estruturado da fase Validator contendo:
+  - Validações implementadas
+  - Testes criados
+  - Decisões arquiteturais
+  - Pontos de atenção
+
+Salve em docs/phases/02-validator-summary.md

@@ -63,7 +63,6 @@ export interface RecursoCreateUseCaseInterface {
 - Dependa apenas de **interfaces** definidas em `src/domain/` (repositórios, contracts)
 - **Nunca** importe diretamente entidades ORM (`@Entity` do MikroORM)
 - **Nunca** importe de `src/modules/` ou `src/infrastructure/`
-- O método `execute()` deve sempre retornar um valor (nunca `void`)
 - Um Use Case = uma responsabilidade (um único fluxo de negócio)
 
 ## Evite
