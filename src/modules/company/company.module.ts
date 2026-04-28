@@ -9,15 +9,8 @@ import { CompanyEntity } from "src/infrastructure/persistence/entities/company.e
 import { UsecaseModule } from "src/applications/usecases/usecase.module";
 
 @Module({
-  imports: [MikroOrmModule.forFeature([CompanyEntity]), UsecaseModule],
+  imports: [UsecaseModule],
   controllers: [CompanyController],
-  providers: [
-    CompanyService,
-    CompanyValidator,
-    {
-      provide: CompanyRepository,
-      useClass: MikroOrmCompanyRepository,
-    },
-  ],
+  providers: [CompanyService, CompanyValidator],
 })
 export class CompanyModule {}
