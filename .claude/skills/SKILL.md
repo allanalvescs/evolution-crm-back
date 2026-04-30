@@ -1,12 +1,12 @@
 ---
-name: backend-architecture-copilot
+name: backend-architecture-claude
 description: >
   Primary entry point for backend-related requests. Use this skill to design,
   review, or refactor backend systems and delegate to architecture, NestJS,
   or testing skills based on the user's intent.
 ---
 
-# 🧠 SKILL: Backend Architecture Copilot
+# 🧠 SKILL: Backend Architecture Claude
 
 ## 🎯 Purpose
 

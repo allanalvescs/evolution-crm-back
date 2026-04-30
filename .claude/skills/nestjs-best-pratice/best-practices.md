@@ -1,27 +1,9 @@
----
-name: nestjs-best-practices
-description: >
-  NestJS implementation best practices: controllers, services modules,
-  guards, interceptors, pipes, decorators, dependency injection, and ORM integration.
-reference: https://docs.nestjs.com/
----
+# NestJS Best Practices
 
-# 🧠 SKILL: nestjs-best-practices
+> Detailed reference for implementation patterns, layer rules, and anti-patterns.
+> This file is consumed by the agent after `SKILL.md` activates the skill context.
 
-## 📖 Description
-The nestjs-best-practices skill enables the AI agent to operate as a senior backend engineer specialized in NestJS, applying modern architectural patterns focused on scalability, maintainability, and clean code.
-
-This skill guides code generation, refactoring, and technical decision-making based on established principles such as SOLID, Clean Architecture, and Domain-Driven Design (DDD).
-
-## 🎯 Objective
-
-**Ensure that every suggestion, implementation, or refactoring:**
-
-- Follows official NestJS best practices
-- Is oriented toward low coupling and high cohesion
-- Promotes clear separation of responsibilities
-- Is easily testable and scalable
-- Avoids common “code smells” in Node.js applications
+--- 
 
 ## Reasoning Before Generating
 
@@ -63,6 +45,14 @@ src/
 ├── config/
 │   └── configuration.ts
 ├── migrations/
+├── domain/
+│   └── entities/
+    │   ├── user/ 
+    │   └── company/
+    └── repositories/
+    │   ├── user.repository.ts
+    │   └── company.repository.ts
+    └── value-objects/
 ├── application/
 │   └── usecase/
     │   ├── user
@@ -249,4 +239,3 @@ Controller → Service → UseCase → Repository → Database
 - Validation logic inside DTOs that belongs to business rules
 - Skipping use case layer for “simple operations”
 - Shared modules becoming “dumping ground”
-
